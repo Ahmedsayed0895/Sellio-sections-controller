@@ -7,10 +7,9 @@ import '../models/category.dart';
 final logger = Logger();
 
 class ApiService {
-  // Using 10.0.2.2 for Android Emulator, localhost for Web/iOS/Windows
   static String get baseUrl {
     if (defaultTargetPlatform == TargetPlatform.android) {
-      return 'http://10.0.2.2:8085/v1'; // Android Emulator special IP
+      return 'http://10.0.2.2:8085/v1';
     }
     return 'http://localhost:8085/v1';
   }
@@ -21,7 +20,7 @@ class ApiService {
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 13),
       validateStatus: (status) =>
-          status! < 600, // Accept 500s as they might contain data
+          status! < 600,
       headers: {
         'Authorization':
             'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1ODk5NTA3MS1iZTdlLTRkNTktYjgyMC0yNzUyNDk3OGRhYmQiLCJpYXQiOjE3Njg2NzgyNzAsImV4cCI6MTc3MTI3MDI3MH0.LPjTKw-G3rgSY-qmUqC9x6cnMrEjoyfbXPl4Q3f2Bhw',
@@ -50,8 +49,6 @@ class ApiService {
       );
       logger.d('Created section response status: ${response.statusCode}');
       logger.d('Created section response data: ${response.data}');
-
-      // Handle the case where backend returns 500 but sends the list of sections
       if (response.data is List) {
         logger.w(
           'Backend returned a List instead of an object. Attempting to find created section.',
@@ -61,17 +58,14 @@ class ApiService {
             .map((json) => CategorySection.fromJson(json))
             .toList();
 
-        // Try to find the section we just created
         try {
-          // We match by title and order, assuming uniqueness for now
-          // Ideally backend returns the object
           final created = list.firstWhere(
             (s) =>
                 s.sectionTitle == section.sectionTitle.toString() &&
                 s.categoryId == section.categoryId.toString() &&
                 s.sortOrder == section.sortOrder,
             orElse: () =>
-                list.last, // Fallback to last item if specific match fails
+                list.last,
           );
           return created;
         } catch (e) {
@@ -82,14 +76,12 @@ class ApiService {
 
       if (response.data is Map<String, dynamic>) {
         final Map<String, dynamic> json = response.data;
-        // Verify it looks like a section (has key fields)
         if (json.containsKey('sectionTitle') || json.containsKey('id')) {
           return CategorySection.fromJson(json);
         }
         logger.w("Response JSON does not look like a CategorySection: $json");
       }
 
-      // If we fall through, assume something is wrong but try parsing or throw
       if (response.statusCode != 200 && response.statusCode != 201) {
         throw "Failed to create section. Status: ${response.statusCode}, Data: ${response.data}";
       }

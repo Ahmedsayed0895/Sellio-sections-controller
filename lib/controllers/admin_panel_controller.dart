@@ -26,7 +26,6 @@ class AdminPanelController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Smart Merge: Preserve locally inactive sections because API only returns active ones
       final localInactive = _sections.where((s) => !s.isActive).toList();
 
       final results = await Future.wait([
@@ -37,12 +36,9 @@ class AdminPanelController extends ChangeNotifier {
       final fetchedActiveSections = results[0] as List<CategorySection>;
       final categories = results[1] as List<Category>;
 
-      // Merge fetched active sections with preserved inactive ones
-      // We rely on ID to avoid duplicates if a section became active remotely (rare edge case handled by prefering fetch)
       final mergedSections = <CategorySection>[...localInactive];
 
       for (final fetched in fetchedActiveSections) {
-        // defined keys in merged map to avoid duplicates if ID exists
         final index = mergedSections.indexWhere((s) => s.id == fetched.id);
         if (index != -1) {
           mergedSections[index] = fetched;
@@ -51,7 +47,6 @@ class AdminPanelController extends ChangeNotifier {
         }
       }
 
-      // Sort locally ensures consistent UI viewing
       mergedSections.sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
 
       _sections = mergedSections;
@@ -73,7 +68,7 @@ class AdminPanelController extends ChangeNotifier {
       sectionTitle: title,
       categoryId: catId,
       sortOrder: sortOrder,
-      isActive: true, // Default to active
+      isActive: true,
     );
 
     try {
@@ -81,14 +76,13 @@ class AdminPanelController extends ChangeNotifier {
       _sections.add(created);
       _sections.sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
       notifyListeners();
-      return null; // Success
+      return null;
     } catch (e) {
-      return e.toString(); // Return error message
+      return e.toString();
     }
   }
 
   Future<String?> updateSection(String id, Map<String, dynamic> updates) async {
-    // Optimistic Update
     final index = _sections.indexWhere((s) => s.id == id);
     if (index == -1) return "Section not found";
 
@@ -108,9 +102,8 @@ class AdminPanelController extends ChangeNotifier {
 
     try {
       await _api.updateSection(id, updates);
-      return null; // Success
+      return null;
     } catch (e) {
-      // Revert on failure
       _sections[index] = originalSection;
       _sections.sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
       notifyListeners();
@@ -125,9 +118,8 @@ class AdminPanelController extends ChangeNotifier {
 
     try {
       await _api.deleteSection(id);
-      return null; // Success
+      return null;
     } catch (e) {
-      // Revert on failure
       _sections = backup;
       notifyListeners();
       return e.toString();

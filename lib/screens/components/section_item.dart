@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/section.dart';
-import '../models/category.dart';
-import '../theme/app_colors.dart';
+import '../../models/category.dart';
+import '../../models/section.dart';
+import '../../theme/app_colors.dart';
+
+
 
 class CategorySectionItem extends StatefulWidget {
   final CategorySection section;

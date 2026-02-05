@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Main Palette
-  static const Color primary = Color(0xFF530827); // Deep Burgundy
-  static const Color secondary = Color(
-    0xFF880E4F,
-  ); // Richer variant for accents
-  static const Color surface = Colors.white; // Clean card background
-  static const Color background = Color(
-    0xFFFCE4EC,
-  ); // Very light pink background
+  static const Color primary = Color(0xFF530827);
+  static const Color secondary = Color(0xFF880E4F);
+  static const Color surface = Colors.white;
+  static const Color background = Color(0xFFFCE4EC);
 
   // Text Colors
   static const Color onPrimary = Colors.white;
@@ -29,6 +24,8 @@ class AppColors {
 
   // Derived Getters
   static Color get activeTrack => primary.withValues(alpha: activeTrackOpacity);
+
   static Color get subtitle => onSurface.withValues(alpha: subtitleOpacity);
+
   static Color get avatarBg => primary.withValues(alpha: avatarBgOpacity);
 }

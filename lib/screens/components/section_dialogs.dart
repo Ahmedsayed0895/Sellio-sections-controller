@@ -5,8 +5,8 @@ import '../../theme/app_colors.dart';
 
 class SectionDialog extends StatefulWidget {
   final List<Category> categories;
-  final CategorySection? section; // If null, we are in "Add" mode
-  final int? initialSortOrder; // Used for "Add" mode defaults
+  final CategorySection? section;
+  final int? initialSortOrder;
   final Function(String title, String categoryId, int sortOrder) onSave;
 
   const SectionDialog({
@@ -42,7 +42,6 @@ class _SectionDialogState extends State<SectionDialog> {
 
     if (_isEdit) {
       _selectedCategoryId = widget.section!.categoryId;
-      // Ensure the selected category still exists in the provided list
       if (!widget.categories.any((c) => c.id == _selectedCategoryId)) {
         _selectedCategoryId = widget.categories.isNotEmpty
             ? widget.categories.first.id

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models/section.dart';
-
 import '../controllers/admin_panel_controller.dart';
-import '../widgets/section_item.dart';
 import '../theme/app_colors.dart';
 import 'components/section_dialogs.dart';
+import 'components/section_item.dart';
 
 class AdminPanel extends StatefulWidget {
   const AdminPanel({super.key});
@@ -65,8 +64,6 @@ class _AdminPanelState extends State<AdminPanel> {
     );
   }
 
-  // DIALOGS
-
   void _showAddDialog() {
     showDialog(
       context: context,
@@ -87,7 +84,6 @@ class _AdminPanelState extends State<AdminPanel> {
         categories: _controller.categories,
         section: section,
         onSave: (title, catId, sortOrder) {
-          // Diff check
           final updates = <String, dynamic>{};
           if (title != section.sectionTitle) {
             updates['sectionTitle'] = title;
@@ -162,7 +158,6 @@ class _AdminPanelState extends State<AdminPanel> {
                   itemCount: _controller.sections.length,
                   itemBuilder: (ctx, index) {
                     final section = _controller.sections[index];
-                    // Find linked category
                     final linkedCategory = _controller.categories
                         .where((c) => c.id == section.categoryId)
                         .firstOrNull;
