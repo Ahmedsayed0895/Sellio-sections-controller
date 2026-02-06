@@ -47,7 +47,7 @@ lib/
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/yourusername/sellio_categories_section_controller.git
+    git clone https://github.com/Ahmedsayed0895/Sellio-sections-controller.git
     cd sellio_categories_section_controller
     ```
 
