@@ -1,6 +1,6 @@
 # Sellio Categories Section Controller
 
-A robust Admin Panel designed for managing Home Screen Category Sections in the Sellio application. This tool empowers administrators to organize, prioritize, and manage the visibility of product categories with a seamless, responsive, and dark-themed user interface.
+A Panel that designed for managing Home Screen Category Sections in the Sellio application. This tool empowers administrators to organize, prioritize, and manage the visibility of product categories with a seamless and responsive user interface.
 
 ## Key Features
 
