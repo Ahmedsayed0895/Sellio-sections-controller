@@ -36,11 +36,6 @@ class AdminPanelCubit extends Cubit<AdminPanelState> {
     emit(state.copyWith(status: AdminPanelStatus.loading));
 
     try {
-      // Keep local inactive sections if we have them, or just fetch fresh
-      // For now, let's fetch fresh. The original VM logic merged local inactive
-      // because the backend might filter them out. We'll verify if that's needed.
-      // Adhering to original VM logic:
-
       final localInactive = state.sections.where((s) => !s.isActive).toList();
 
       final results = await Future.wait([_getSections(), _getCategories()]);
@@ -87,19 +82,27 @@ class AdminPanelCubit extends Cubit<AdminPanelState> {
         isActive: true,
       );
 
-      final created = await _createSection(newSection);
+      final createdList = await _createSection(newSection);
 
-      final updatedSections = List<CategorySection>.from(state.sections)
-        ..add(created)
-        ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+      final localInactive = state.sections.where((s) => !s.isActive).toList();
+      final mergedSections = <CategorySection>[...localInactive];
 
-      emit(state.copyWith(sections: updatedSections));
+      for (final fetched in createdList) {
+        final index = mergedSections.indexWhere((s) => s.id == fetched.id);
+        if (index != -1) {
+          mergedSections[index] = fetched;
+        } else {
+          mergedSections.add(fetched);
+        }
+      }
+
+      mergedSections.sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+
+      emit(state.copyWith(sections: mergedSections));
     } catch (e) {
-      // Just emit error message, don't change status to failure if we want to keep showing list
       emit(
         state.copyWith(errorMessage: "Failed to add section: ${e.toString()}"),
       );
-      // Clear error message after a bit? Or handle in UI via listener.
     }
   }
 
@@ -108,7 +111,6 @@ class AdminPanelCubit extends Cubit<AdminPanelState> {
     final index = originalSections.indexWhere((s) => s.id == id);
     if (index == -1) return;
 
-    // Optimistic update
     final originalSection = originalSections[index];
     final updatedSection = originalSection.copyWith(
       sectionTitle: updates['sectionTitle'],
@@ -128,8 +130,9 @@ class AdminPanelCubit extends Cubit<AdminPanelState> {
 
     try {
       await _updateSection(id, updates);
+      // Re-fetch to pick up server-side changes (e.g. sort order swaps)
+      await loadData();
     } catch (e) {
-      // Revert
       emit(
         state.copyWith(
           sections: originalSections,
@@ -142,7 +145,6 @@ class AdminPanelCubit extends Cubit<AdminPanelState> {
   Future<void> removeSection(String id) async {
     final originalSections = List<CategorySection>.from(state.sections);
 
-    // Optimistic
     final updatedList = List<CategorySection>.from(originalSections)
       ..removeWhere((s) => s.id == id);
 
@@ -151,7 +153,6 @@ class AdminPanelCubit extends Cubit<AdminPanelState> {
     try {
       await _deleteSection(id);
     } catch (e) {
-      // Revert
       emit(
         state.copyWith(
           sections: originalSections,
