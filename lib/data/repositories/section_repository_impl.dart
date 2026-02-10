@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import '../../domain/entities/section.dart';
 import '../../domain/repositories/section_repository.dart';
 import '../datasources/remote_datasource.dart';
-import '../models/section_model.dart';
+import '../mappers/section_mapper.dart';
 
 @LazySingleton(as: ISectionRepository)
 class SectionRepositoryImpl implements ISectionRepository {
@@ -12,13 +12,15 @@ class SectionRepositoryImpl implements ISectionRepository {
 
   @override
   Future<List<CategorySection>> getSections() async {
-    return await dataSource.fetchSections();
+    final models = await dataSource.fetchSections();
+    return models.map(SectionMapper.toEntity).toList();
   }
 
   @override
-  Future<CategorySection> createSection(CategorySection section) async {
-    final model = SectionModel.fromEntity(section);
-    return await dataSource.createSection(model);
+  Future<List<CategorySection>> createSection(CategorySection section) async {
+    final model = SectionMapper.toModel(section);
+    final createdModels = await dataSource.createSection(model);
+    return createdModels.map(SectionMapper.toEntity).toList();
   }
 
   @override
