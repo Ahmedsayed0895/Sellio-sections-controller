@@ -8,7 +8,7 @@ class CreateSection {
 
   CreateSection(this.repository);
 
-  Future<CategorySection> call(CategorySection section) {
+  Future<List<CategorySection>> call(CategorySection section) {
     return repository.createSection(section);
   }
 }
