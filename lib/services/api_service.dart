@@ -7,23 +7,22 @@ import '../models/category.dart';
 final logger = Logger();
 
 class ApiService {
-  static String get baseUrl {
+  /*static String get baseUrl {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return 'http://10.0.2.2:8085/v1';
     }
     return 'http://localhost:8085/v1';
-  }
-
+  }*/
+  static String baseUrl = 'https://app.sell-io.app/v1';
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 13),
-      validateStatus: (status) =>
-          status! < 600,
+      validateStatus: (status) => status! < 600,
       headers: {
         'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1ODk5NTA3MS1iZTdlLTRkNTktYjgyMC0yNzUyNDk3OGRhYmQiLCJpYXQiOjE3Njg2NzgyNzAsImV4cCI6MTc3MTI3MDI3MH0.LPjTKw-G3rgSY-qmUqC9x6cnMrEjoyfbXPl4Q3f2Bhw',
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjNmE1YTQwNy0wM2YzLTRjNzctYWQzZC01NTc5ZDU0MDcyNDUiLCJpYXQiOjE3NzA2MzI1ODYsImV4cCI6MTc3MzIyNDU4Nn0.0c1Fl-nUv93bA4RweV6hpimQ28sxICZT3nevXJOOH30',
       },
     ),
   );
@@ -64,8 +63,7 @@ class ApiService {
                 s.sectionTitle == section.sectionTitle.toString() &&
                 s.categoryId == section.categoryId.toString() &&
                 s.sortOrder == section.sortOrder,
-            orElse: () =>
-                list.last,
+            orElse: () => list.last,
           );
           return created;
         } catch (e) {
