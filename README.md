@@ -7,6 +7,7 @@ A powerful and intuitive admin panel designed for managing Home Screen Category 
 ## Key Features
 
 *   **Section Management**: Create, Read, Update, and Delete (CRUD) sections with ease.
+*   **Subcategory Images**: Visual support for category images, making identification easier.
 *   **Optimistic UI Updates**: Instant feedback on actions (like toggling active status or reordering) ensures a snappy user experience, with automatic rollback in case of server errors.
 *   **Smart Merging**: Intelligently merges server data with local state to ensure inactive sections remain visible and editable for administrators.
 *   **Sorting & Organization**: Manually control the display order of sections via a sort order field.
@@ -19,17 +20,17 @@ This project follows **Clean Architecture** principles to ensure scalability, te
 
 ```mermaid
 graph TD
-    UI[Presentation (UI)] --> ViewModel[Presentation (ViewModel)]
-    ViewModel --> UseCase[Domain (Use Case)]
-    UseCase --> RepoInterface[Domain (Repository Interface)]
-    RepoImpl[Data (Repository Implementation)] --> RepoInterface
-    RepoImpl --> DataSource[Data (Data Source)]
+    UI[Presentation UI] --> Cubit[Presentation Cubit]
+    Cubit --> UseCase[Domain Use Case]
+    UseCase --> RepoInterface[Domain Repository Interface]
+    RepoImpl[Data Repository Implementation] --> RepoInterface
+    RepoImpl --> DataSource[Data Data Source]
     DataSource --> API[External API]
 ```
 
 - **Domain Layer**: Contains Entities, Use Case, and Repository Interfaces. Pure Dart, no dependencies.
 - **Data Layer**: Implements Repositories, defines Models, and handles Data Sources (API/DB).
-- **Presentation Layer**: UI (Screens) and State Management (ViewModels).
+- **Presentation Layer**: UI (Screens) and State Management (Cubits).
 
 > [!NOTE]
 > For a deep dive into the architecture, check out [Clean Architecture in Sellio](docs/clean_architecture.md).
@@ -37,10 +38,10 @@ graph TD
 ## Technology Stack
 
 *   **Framework**: [Flutter](https://flutter.dev/) (Dart 3.x)
+*   **State Management**: [flutter_bloc](https://pub.dev/packages/flutter_bloc) (Cubit) for predictable state.
+*   **Dependency Injection**: [GetIt](https://pub.dev/packages/get_it) & [Injectable](https://pub.dev/packages/injectable) for decoupled architecture.
 *   **Networking**: [Retrofit](https://pub.dev/packages/retrofit) & [Dio](https://pub.dev/packages/dio) for type-safe API calls.
 *   **Serialization**: [json_serializable](https://pub.dev/packages/json_serializable) for automated JSON handling.
-*   **State Management**: `ChangeNotifier` / `Provider` pattern.
-*   **Dependency Injection**: [GetIt](https://pub.dev/packages/get_it) & [Injectable](https://pub.dev/packages/injectable) for decoupled architecture.
 *   **Code Generation**: [build_runner](https://pub.dev/packages/build_runner) for generating boilerplate.
 
 > [!TIP]
@@ -65,7 +66,7 @@ graph TD
     flutter pub get
     ```
 
-3.  **Generate Code** (required for Retrofit & Models)
+3.  **Generate Code** (required for Retrofit, Models, & DI)
     ```bash
     flutter pub run build_runner build --delete-conflicting-outputs
     ```
@@ -81,15 +82,16 @@ graph TD
 lib/
 ├── domain/           # Business logic (Entities, Use Cases, Repos)
 ├── data/             # Data implementation (Models, APIs, Repos Impl)
-├── presentation/     # UI and ViewModels
+├── presentation/     # UI and Cubits
 │   ├── screens/
-│   ├── viewmodels/
+│   ├── cubits/
 │   └── theme/
 └── main.dart         # Entry point
 ```
 
 ## Documentation
 
+- [Cubit Refactor Guide](docs/cubit_refactor_guide.md)
 - [Clean Architecture Guide](docs/clean_architecture.md)
 - [Retrofit & Networking](docs/retrofit_details.md)
 - [Dependency Injection Guide](docs/dependency_injection.md)
