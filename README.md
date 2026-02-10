@@ -2,21 +2,52 @@
 
 [![Latest Release](https://img.shields.io/github/v/release/Ahmedsayed0895/Sellio-sections-controller)](https://github.com/Ahmedsayed0895/Sellio-sections-controller/releases/latest)
 
-A powerful and intuitive admin panel designed for managing Home Screen Category Sections in the Sellio application. This tool empowers administrators to organize, prioritize, and manage the visibility of product categories with a seamless and responsive user interface.
+A powerful admin panel for managing Home Screen Category Sections in the Sellio application — built with **Clean Architecture**, **Cubit**, and **Retrofit**, and fully documented as a **learning resource** for Flutter developers.
+
+---
+
+## 📚 Learn Clean Architecture — Chapter by Chapter
+
+> **This project is not just an app — it's a guided course.**
+>
+> Every architectural decision, every layer, every line of code is explained in a beginner-friendly **App Story** that walks you through building a real-world Flutter app using Clean Architecture.
+
+| #   | Chapter                                                                 | What You'll Learn                                |
+| --- | ----------------------------------------------------------------------- | ------------------------------------------------ |
+| 0   | [Introduction](app_story/00_introduction.md)                            | Project overview and architecture map            |
+| 1   | [The Foundation — Entities](app_story/01_the_foundation.md)             | Domain entities and business objects             |
+| 2   | [The Translator — Models & JSON](app_story/02_the_translator.md)        | Data models, JSON serialization, code generation |
+| 3   | [The Messenger — API & Data Sources](app_story/03_the_messenger.md)     | Retrofit, Dio, and remote data sources           |
+| 3.5 | [The Bridge — Mappers](app_story/03b_the_bridge.md)                     | Decoupling models from entities with mappers     |
+| 4   | [The Rulebook — Repositories & Use Cases](app_story/04_the_rulebook.md) | Repository pattern and single-purpose use cases  |
+| 5   | [The Wiring — Dependency Injection](app_story/05_the_wiring.md)         | GetIt, Injectable, and auto-wiring               |
+| 6   | [The Brain — Cubit State Management](app_story/06_the_brain.md)         | Cubit, states, and reactive UI                   |
+| 7   | [The Face — UI Layer](app_story/07_the_face.md)                         | Screens, components, and user interactions       |
+
+### 📖 Technical Deep Dives
+
+| Guide                                                  | Description                                       |
+| ------------------------------------------------------ | ------------------------------------------------- |
+| [Clean Architecture](docs/clean_architecture.md)       | Layer separation, dependency rules, and diagrams  |
+| [Dependency Injection](docs/dependency_injection.md)   | How GetIt and Injectable wire everything together |
+| [Retrofit & Networking](docs/retrofit_details.md)      | Type-safe API calls with Retrofit and Dio         |
+| [Cubit Refactor Guide](docs/cubit_refactor_guide.md)   | Migrating from ViewModel to Cubit                 |
+| [Release Automation](docs/release_automation_guide.md) | CI/CD with GitHub Actions                         |
+
+---
 
 ## Key Features
 
-*   **Section Management**: Create, Read, Update, and Delete (CRUD) sections with ease.
-*   **Subcategory Images**: Visual support for category images, making identification easier.
-*   **Optimistic UI Updates**: Instant feedback on actions (like toggling active status or reordering) ensures a snappy user experience, with automatic rollback in case of server errors.
-*   **Smart Merging**: Intelligently merges server data with local state to ensure inactive sections remain visible and editable for administrators.
-*   **Sorting & Organization**: Manually control the display order of sections via a sort order field.
-*   **Active/Inactive Toggling**: Quickly enable or disable sections from the main list.
-*   **Error Handling**: Comprehensive error handling with user-friendly snackbars and retry mechanisms.
+*   **Section Management**: Full CRUD operations for home screen sections
+*   **Shimmer Loading**: Polished skeleton loading effect instead of spinners
+*   **Optimistic UI**: Instant feedback with automatic rollback on errors
+*   **Smart Merging**: Server data merged with local state to preserve inactive sections
+*   **Active/Inactive Toggling**: Quick enable/disable from the main list
+*   **Sort Order Sync**: Edit sort order and see changes reflected immediately
 
 ## Architecture
 
-This project follows **Clean Architecture** principles to ensure scalability, testability, and separation of concerns.
+This project follows **Clean Architecture** principles with complete layer separation:
 
 ```mermaid
 graph TD
@@ -29,24 +60,18 @@ graph TD
     DataSource --> API[External API]
 ```
 
-- **Domain Layer**: Contains Entities, Use Cases, and Repository Interfaces. Pure Dart, no dependencies.
-- **Data Layer**: Implements Repositories, defines Models and Mappers, and handles Data Sources (API/DB).
-- **Presentation Layer**: UI (Screens) and State Management (Cubits).
-
-> [!NOTE]
-> For a deep dive into the architecture, check out [Clean Architecture in Sellio](docs/clean_architecture.md).
+- **Domain Layer**: Entities, Use Cases, Repository Interfaces — pure Dart, zero dependencies
+- **Data Layer**: Models, Mappers, Data Sources, Repository Implementations
+- **Presentation Layer**: Screens, Components, Cubits, Theme
 
 ## Technology Stack
 
 *   **Framework**: [Flutter](https://flutter.dev/) (Dart 3.x)
-*   **State Management**: [flutter_bloc](https://pub.dev/packages/flutter_bloc) (Cubit) for predictable state.
-*   **Dependency Injection**: [GetIt](https://pub.dev/packages/get_it) & [Injectable](https://pub.dev/packages/injectable) for decoupled architecture.
-*   **Networking**: [Retrofit](https://pub.dev/packages/retrofit) & [Dio](https://pub.dev/packages/dio) for type-safe API calls.
-*   **Serialization**: [json_serializable](https://pub.dev/packages/json_serializable) for automated JSON handling.
-*   **Code Generation**: [build_runner](https://pub.dev/packages/build_runner) for generating boilerplate.
-
-> [!TIP]
-> Learn more about our networking layer in [Retrofit Details](docs/retrofit_details.md).
+*   **State Management**: [flutter_bloc](https://pub.dev/packages/flutter_bloc) (Cubit)
+*   **Dependency Injection**: [GetIt](https://pub.dev/packages/get_it) & [Injectable](https://pub.dev/packages/injectable)
+*   **Networking**: [Retrofit](https://pub.dev/packages/retrofit) & [Dio](https://pub.dev/packages/dio)
+*   **Serialization**: [json_serializable](https://pub.dev/packages/json_serializable)
+*   **Loading Effects**: [shimmer](https://pub.dev/packages/shimmer)
 
 ## Getting Started
 
@@ -92,13 +117,7 @@ lib/
 │   ├── cubits/
 │   └── theme/
 └── main.dart         # Entry point
+
+app_story/            # 📚 Chapter-by-chapter architecture guide
+docs/                 # 📖 Technical deep-dive documentation
 ```
-
-## Documentation
-
-- [Cubit Refactor Guide](docs/cubit_refactor_guide.md)
-- [Clean Architecture Guide](docs/clean_architecture.md)
-- [Retrofit & Networking](docs/retrofit_details.md)
-- [Dependency Injection Guide](docs/dependency_injection.md)
-- [Release Automation](docs/release_automation_guide.md)
-- [App Story](app_story/) — A chapter-by-chapter guide explaining every line of the project
