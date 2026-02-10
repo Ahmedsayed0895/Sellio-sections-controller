@@ -49,13 +49,13 @@ class _SellioApi implements SellioApi {
   }
 
   @override
-  Future<SectionModel> createSection(SectionModel section) async {
+  Future<List<SectionModel>> createSection(SectionModel section) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(section.toJson());
-    final _options = _setStreamType<SectionModel>(
+    final _options = _setStreamType<List<SectionModel>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -65,10 +65,12 @@ class _SellioApi implements SellioApi {
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late SectionModel _value;
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<SectionModel> _value;
     try {
-      _value = SectionModel.fromJson(_result.data!);
+      _value = _result.data!
+          .map((dynamic i) => SectionModel.fromJson(i as Map<String, dynamic>))
+          .toList();
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
       rethrow;
