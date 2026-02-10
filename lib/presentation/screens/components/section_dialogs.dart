@@ -119,16 +119,27 @@ class _SectionDialogState extends State<SectionDialog> {
                     },
                   ),
                   if (_selectedCategoryId != null) ...[
-                    const SizedBox(height: 12),
-                    const Text(
-                      "Subcategories:",
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: AppColors.hint,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.grid_view_rounded,
+                          size: 16,
+                          color: AppColors.primary,
+                        ),
+                        const SizedBox(width: 6),
+                        const Text(
+                          "SUBCATEGORIES",
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: AppColors.hint,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.8,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 8),
                     Builder(
                       builder: (context) {
                         final selectedCategory = widget.categories
@@ -138,41 +149,128 @@ class _SectionDialogState extends State<SectionDialog> {
                               orElse: () => widget.categories.first,
                             );
                         if (selectedCategory.subCategories.isEmpty) {
-                          return const Text(
-                            "No subcategories",
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          return Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey.shade200),
+                            ),
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.category_outlined,
+                                  size: 28,
+                                  color: AppColors.hint,
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  "No subcategories",
+                                  style: TextStyle(
+                                    color: AppColors.hint,
+                                    fontSize: 12,
+                                    fontStyle: FontStyle.italic,
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         }
                         return Wrap(
-                          spacing: 4.0,
-                          runSpacing: -8.0,
+                          spacing: 8,
+                          runSpacing: 8,
                           children: selectedCategory.subCategories.map((sub) {
                             final hasImage =
                                 sub.imageUrl != null &&
                                 sub.imageUrl!.isNotEmpty;
-                            return Chip(
-                              avatar: CircleAvatar(
-                                backgroundImage: hasImage
-                                    ? NetworkImage(sub.imageUrl!)
-                                    : null,
-                                onBackgroundImageError: hasImage
-                                    ? (_, __) {}
-                                    : null,
-                                child: !hasImage
-                                    ? const Icon(
-                                        Icons.image_not_supported,
-                                        size: 12,
-                                      )
-                                    : null,
+                            return SizedBox(
+                              width: 80,
+                              height: 95,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.15,
+                                    ),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(
+                                        alpha: 0.04,
+                                      ),
+                                      blurRadius: 6,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  children: [
+                                    // Image area
+                                    Expanded(
+                                      child: Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.primary.withValues(
+                                            alpha: 0.06,
+                                          ),
+                                          borderRadius:
+                                              const BorderRadius.vertical(
+                                                top: Radius.circular(11),
+                                              ),
+                                        ),
+                                        child: hasImage
+                                            ? ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.vertical(
+                                                      top: Radius.circular(11),
+                                                    ),
+                                                child: Image.network(
+                                                  sub.imageUrl!,
+                                                  fit: BoxFit.cover,
+                                                  errorBuilder: (_, __, ___) =>
+                                                      const Center(
+                                                        child: Icon(
+                                                          Icons
+                                                              .broken_image_rounded,
+                                                          color: AppColors.hint,
+                                                          size: 22,
+                                                        ),
+                                                      ),
+                                                ),
+                                              )
+                                            : const Center(
+                                                child: Icon(
+                                                  Icons.image_outlined,
+                                                  color: AppColors.hint,
+                                                  size: 24,
+                                                ),
+                                              ),
+                                      ),
+                                    ),
+                                    // Title area
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 4,
+                                        vertical: 6,
+                                      ),
+                                      child: Text(
+                                        sub.title,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppColors.onSurface,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              label: Text(
-                                sub.title,
-                                style: const TextStyle(fontSize: 11),
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 4,
-                              ),
-                              visualDensity: VisualDensity.compact,
                             );
                           }).toList(),
                         );
