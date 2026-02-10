@@ -80,7 +80,15 @@ jobs:
       - name: Zip Windows Release
         run: |
           cd windows-release
-          zip -r ../windows-release.zip .
+          zip -r ../Sellio-${{ github.ref_name }}-Windows-PC.zip .
+          cd ..
+
+      - name: Rename APKs
+        run: |
+          cd app-release
+          mv app-arm64-v8a-release.apk Sellio-${{ github.ref_name }}-Modern-Android-64bit.apk
+          mv app-armeabi-v7a-release.apk Sellio-${{ github.ref_name }}-Older-Android-32bit.apk
+          mv app-x86_64-release.apk Sellio-${{ github.ref_name }}-Intel-Emulator.apk
           cd ..
 
       - name: Create Release
@@ -88,6 +96,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            app-release/*.apk
-            windows-release.zip
+            app-release/Sellio-*.apk
+            Sellio-*-Windows-PC.zip
           generate_release_notes: true
