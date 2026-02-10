@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/section.dart';
-import '../../models/category.dart';
+import '../../domain/entities/category.dart';
+import '../../domain/entities/section.dart';
 import '../../theme/app_colors.dart';
 
 class SectionDialog extends StatefulWidget {
