@@ -48,13 +48,6 @@ We created a file `.github/workflows/build_and_release.yml` to define the automa
 **Solution:**
 - Added a step to **Zip** the Windows build output into a single file: `Sellio-v1.0.1-Windows-PC.zip`.
 
-### 5.  App Icon
-**Problem:** The app had the default Flutter icon.
-**Solution:**
-- Added `flutter_launcher_icons` package.
-- Generated a professional icon using the primary brand color (`#530827`).
-- Configured `pubspec.yaml` and ran the generation tool to create native icons for Android and iOS.
-
 ---
 
 ##  How to Create a New Release
