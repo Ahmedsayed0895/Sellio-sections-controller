@@ -13,9 +13,8 @@ abstract class SellioApi {
   Future<List<SectionModel>> fetchSections();
 
   @POST('/category-sections')
-  Future<SectionModel> createSection(@Body() SectionModel section);
+  Future<List<SectionModel>> createSection(@Body() SectionModel section);
 
-  // Use dynamic or Map<String, dynamic> for body as it's partial updates
   @PUT('/category-sections/{id}')
   Future<void> updateSection(
     @Path('id') String id,
