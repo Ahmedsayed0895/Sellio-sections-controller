@@ -77,11 +77,17 @@ jobs:
           name: windows-release
           path: windows-release
 
+      - name: Zip Windows Release
+        run: |
+          cd windows-release
+          zip -r ../windows-release.zip .
+          cd ..
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
             app-release/app-release.apk
-            windows-release/**
+            windows-release.zip
           generate_release_notes: true
