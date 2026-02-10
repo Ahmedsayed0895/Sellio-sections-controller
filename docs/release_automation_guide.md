@@ -2,12 +2,12 @@
 
 This document outlines the steps taken to automate GitHub Releases for the **Sellio Categories Section Controller** app, the challenges faced, and how they were resolved. It also provides a step-by-step guide on how to create a new release.
 
-## 🚀 Goal
+##  Goal
 Automate the process of building the Flutter app for **Android** and **Windows**, running tests (optional), and publishing a Release on GitHub with the installer files attached whenever a new version tag (e.g., `v1.0.1`) is pushed.
 
 ---
 
-## 🛠️ Phase 1: Initial Setup
+##  Phase 1: Initial Setup
 
 ### 1. GitHub Actions Workflow
 We created a file `.github/workflows/build_and_release.yml` to define the automation pipeline.
@@ -21,34 +21,34 @@ We created a file `.github/workflows/build_and_release.yml` to define the automa
 
 ---
 
-## 🔧 Phase 2: Problems & Solutions
+## Phase 2: Problems & Solutions
 
-### 1. 📉 App Size Optimization (>40MB → ~15MB)
+### 1. App Size Optimization (>40MB → ~15MB)
 **Problem:** The initial APK was over 40MB because it was a "fat" APK containing compiled code for all Android architectures (arm64, armv7, x86).
 **Solution:**
 - We modified the build command to **split the APK** by ABI (Application Binary Interface).
 - **Command:** `flutter build apk --release --split-per-abi`
 - **Result:** This generates 3 separate, smaller APKs (~11-16MB each) tailored for specific devices.
 
-### 2. 🌐 Connection Error (Release Build)
+### 2.  Connection Error (Release Build)
 **Problem:** The app worked in Debug mode but failed to connect to the backend in Release mode ("Is server running?").
 **Root Cause:** Android requires explicit permission to access the internet. Debug builds grant this automatically, but Release builds do not.
 **Solution:**
 - Added `<uses-permission android:name="android.permission.INTERNET"/>` to `android/app/src/main/AndroidManifest.xml`.
 
-### 3. 🏷️ Confusing Filenames
+### 3.  Confusing Filenames
 **Problem:** The generated files were named technically (`app-release.apk`, `windows-release.zip`), which is confusing for non-technical users.
 **Solution:**
 - We added a "Rename" step in the workflow to rename assets based on the version tag and intent.
 - **Old Name:** `app-arm64-v8a-release.apk`
 - **New Name:** `Sellio-v1.0.1-Modern-Android-64bit.apk`
 
-### 4. 📂 Too Many Windows Files
+### 4. Too Many Windows Files
 **Problem:** The Windows build produces an `.exe` file plus many `.dll` files and a `data` folder (over 15 files). Uploading them individually made the release messy.
 **Solution:**
 - Added a step to **Zip** the Windows build output into a single file: `Sellio-v1.0.1-Windows-PC.zip`.
 
-### 5. 🎨 App Icon
+### 5.  App Icon
 **Problem:** The app had the default Flutter icon.
 **Solution:**
 - Added `flutter_launcher_icons` package.
@@ -57,7 +57,7 @@ We created a file `.github/workflows/build_and_release.yml` to define the automa
 
 ---
 
-## 📦 How to Create a New Release
+##  How to Create a New Release
 
 Follow these steps whenever you are ready to publish a new version of the app.
 
