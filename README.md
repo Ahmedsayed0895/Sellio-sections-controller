@@ -1,8 +1,8 @@
-# Sellio Categories Section Controller
+# Sellio Categories Sections
 
 [![Latest Release](https://img.shields.io/github/v/release/Ahmedsayed0895/Sellio-sections-controller)](https://github.com/Ahmedsayed0895/Sellio-sections-controller/releases/latest)
 
-A Panel that designed for managing Home Screen Category Sections in the Sellio application. This tool empowers administrators to organize, prioritize, and manage the visibility of product categories with a seamless and responsive user interface.
+A powerful and intuitive admin panel designed for managing Home Screen Category Sections in the Sellio application. This tool empowers administrators to organize, prioritize, and manage the visibility of product categories with a seamless and responsive user interface.
 
 ## Key Features
 
@@ -13,36 +13,44 @@ A Panel that designed for managing Home Screen Category Sections in the Sellio a
 *   **Active/Inactive Toggling**: Quickly enable or disable sections from the main list.
 *   **Error Handling**: Comprehensive error handling with user-friendly snackbars and retry mechanisms.
 
-## Tech Stack
+## Architecture
 
-*   **Framework**: [Flutter](https://flutter.dev/) (Dart)
-*   **Networking**: [Dio](https://pub.dev/packages/dio) for robust HTTP requests.
-*   **State Management**: `ChangeNotifier` with `AnimatedBuilder` for clean, reactive UI updates.
-*   **Linting**: `flutter_lints` for code quality and consistency.
-*   **Design**: Material Design 3 with custom theming.
+This project follows **Clean Architecture** principles to ensure scalability, testability, and separation of concerns.
 
-## Project Structure
-
+```mermaid
+graph TD
+    UI[Presentation (UI)] --> ViewModel[Presentation (ViewModel)]
+    ViewModel --> UseCase[Domain (Use Case)]
+    UseCase --> RepoInterface[Domain (Repository Interface)]
+    RepoImpl[Data (Repository Implementation)] --> RepoInterface
+    RepoImpl --> DataSource[Data (Data Source)]
+    DataSource --> API[External API]
 ```
-lib/
-├── controllers/      # Business logic and state management
-│   └── admin_panel_controller.dart
-├── models/           # Data models (Category, Section)
-├── screens/          # UI Screens
-│   ├── admin_panel.dart
-│   └── components/   # Screen-specific widgets (Dialogs)
-├── services/         # API and external communication
-│   └── api_service.dart
-├── theme/            # App-wide styling and colors
-│   └── app_colors.dart
-└── main.dart         # Entry point and theme configuration
-```
+
+- **Domain Layer**: Contains Entities, Use Case, and Repository Interfaces. Pure Dart, no dependencies.
+- **Data Layer**: Implements Repositories, defines Models, and handles Data Sources (API/DB).
+- **Presentation Layer**: UI (Screens) and State Management (ViewModels).
+
+> [!NOTE]
+> For a deep dive into the architecture, check out [Clean Architecture in Sellio](docs/clean_architecture.md).
+
+## Technology Stack
+
+*   **Framework**: [Flutter](https://flutter.dev/) (Dart 3.x)
+*   **Networking**: [Retrofit](https://pub.dev/packages/retrofit) & [Dio](https://pub.dev/packages/dio) for type-safe API calls.
+*   **Serialization**: [json_serializable](https://pub.dev/packages/json_serializable) for automated JSON handling.
+*   **State Management**: `ChangeNotifier` / `Provider` pattern.
+*   **Dependency Injection**: [GetIt](https://pub.dev/packages/get_it) & [Injectable](https://pub.dev/packages/injectable) for decoupled architecture.
+*   **Code Generation**: [build_runner](https://pub.dev/packages/build_runner) for generating boilerplate.
+
+> [!TIP]
+> Learn more about our networking layer in [Retrofit Details](docs/retrofit_details.md).
 
 ## Getting Started
 
 ### Prerequisites
 
-*   [Flutter SDK](https://docs.flutter.dev/get-started/install) (version 3.10.4 or higher)
+*   [Flutter SDK](https://docs.flutter.dev/get-started/install)
 *   Dart SDK
 
 ### Installation
@@ -57,23 +65,32 @@ lib/
     flutter pub get
     ```
 
-3.  **Run the application**
+3.  **Generate Code** (required for Retrofit & Models)
+    ```bash
+    flutter pub run build_runner build --delete-conflicting-outputs
+    ```
+
+4.  **Run the application**
     ```bash
     flutter run
     ```
 
-## Usage
+## Project Structure
 
-### Managing Sections
+```
+lib/
+├── domain/           # Business logic (Entities, Use Cases, Repos)
+├── data/             # Data implementation (Models, APIs, Repos Impl)
+├── presentation/     # UI and ViewModels
+│   ├── screens/
+│   ├── viewmodels/
+│   └── theme/
+└── main.dart         # Entry point
+```
 
-1.  **Add a Section**: Tap the floating "+" button. Enter the section title, select a category, and define the sort order.
-2.  **Edit a Section**: Tap on any section card to open the edit dialog. You can modify the title, linked category, or sort order.
-3.  **Toggle Visibility**: Use the toggle switch on the section card to mark it as Active or Inactive.
-4.  **Delete a Section**: Click the trash icon on a section card to permanently remove it.
+## Documentation
 
-
-## Release Notes
-
-### v1.0.1
-*   **Fix**: Resolved API initialization error where `remoteBaseUrl` was accessed before initialization.
-*   **Improvement**: Enhanced API response parsing to robustly handle both `List` and wrapped `Map` responses (e.g. `{ "data": [...] }`) from the backend.
+- [Clean Architecture Guide](docs/clean_architecture.md)
+- [Retrofit & Networking](docs/retrofit_details.md)
+- [Dependency Injection Guide](docs/dependency_injection.md)
+- [Release Automation](docs/release_automation_guide.md)
