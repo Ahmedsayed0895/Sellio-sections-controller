@@ -131,10 +131,12 @@ class _SectionDialogState extends State<SectionDialog> {
                     const SizedBox(height: 4),
                     Builder(
                       builder: (context) {
-                        final selectedCategory = widget.categories.firstWhere(
-                          (c) => c.id == _selectedCategoryId,
-                          orElse: () => widget.categories.first,
-                        );
+                        final selectedCategory = widget.categories
+                            .cast<Category>()
+                            .firstWhere(
+                              (c) => c.id == _selectedCategoryId,
+                              orElse: () => widget.categories.first,
+                            );
                         if (selectedCategory.subCategories.isEmpty) {
                           return const Text(
                             "No subcategories",
