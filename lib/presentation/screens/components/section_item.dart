@@ -223,25 +223,41 @@ class _CategorySectionItemState extends State<CategorySectionItem>
                                         .subCategories
                                         .map(
                                           (sub) => Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 8,
-                                              vertical: 4,
-                                            ),
+                                            padding: const EdgeInsets.all(4),
                                             decoration: BoxDecoration(
                                               color: Colors.grey.shade100,
                                               borderRadius:
-                                                  BorderRadius.circular(4),
+                                                  BorderRadius.circular(20),
                                               border: Border.all(
                                                 color: Colors.grey.shade300,
                                               ),
                                             ),
-                                            child: Text(
-                                              sub.title,
-                                              style: TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.grey.shade700,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 10,
+                                                  backgroundImage: NetworkImage(
+                                                    sub.imageUrl,
+                                                  ),
+                                                  onBackgroundImageError:
+                                                      (_, __) {},
+                                                  child: const Icon(
+                                                    Icons.image_not_supported,
+                                                    size: 10,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 6),
+                                                Text(
+                                                  sub.title,
+                                                  style: TextStyle(
+                                                    fontSize: 11,
+                                                    color: Colors.grey.shade700,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 4),
+                                              ],
                                             ),
                                           ),
                                         )

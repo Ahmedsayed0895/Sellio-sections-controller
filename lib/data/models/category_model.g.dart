@@ -24,6 +24,7 @@ SubCategoryModel _$SubCategoryModelFromJson(Map<String, dynamic> json) =>
     SubCategoryModel(
       id: json['id'] as String,
       title: json['title'] as String,
+      imageUrl: json['imageUrl'] as String,
       categoryId: json['categoryId'] as String,
     );
 
@@ -31,5 +32,6 @@ Map<String, dynamic> _$SubCategoryModelToJson(SubCategoryModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
+      'imageUrl': instance.imageUrl,
       'categoryId': instance.categoryId,
     };

@@ -148,6 +148,14 @@ class _SectionDialogState extends State<SectionDialog> {
                           runSpacing: -8.0,
                           children: selectedCategory.subCategories.map((sub) {
                             return Chip(
+                              avatar: CircleAvatar(
+                                backgroundImage: NetworkImage(sub.imageUrl),
+                                onBackgroundImageError: (_, __) {},
+                                child: const Icon(
+                                  Icons.image_not_supported,
+                                  size: 12,
+                                ),
+                              ),
                               label: Text(
                                 sub.title,
                                 style: const TextStyle(fontSize: 11),

@@ -34,6 +34,7 @@ class CategoryModel extends Category {
               : SubCategoryModel(
                   id: e.id,
                   title: e.title,
+                  imageUrl: e.imageUrl,
                   categoryId: e.categoryId,
                 ).toJson(),
         )
@@ -46,6 +47,7 @@ class SubCategoryModel extends SubCategory {
   const SubCategoryModel({
     required super.id,
     required super.title,
+    required super.imageUrl,
     required super.categoryId,
   });
 
