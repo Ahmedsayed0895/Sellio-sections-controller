@@ -149,12 +149,20 @@ class _SectionDialogState extends State<SectionDialog> {
                           children: selectedCategory.subCategories.map((sub) {
                             return Chip(
                               avatar: CircleAvatar(
-                                backgroundImage: NetworkImage(sub.imageUrl),
+                                backgroundImage:
+                                    sub.imageUrl != null &&
+                                        sub.imageUrl!.isNotEmpty
+                                    ? NetworkImage(sub.imageUrl!)
+                                    : null,
                                 onBackgroundImageError: (_, __) {},
-                                child: const Icon(
-                                  Icons.image_not_supported,
-                                  size: 12,
-                                ),
+                                child:
+                                    sub.imageUrl == null ||
+                                        sub.imageUrl!.isEmpty
+                                    ? const Icon(
+                                        Icons.image_not_supported,
+                                        size: 12,
+                                      )
+                                    : null,
                               ),
                               label: Text(
                                 sub.title,

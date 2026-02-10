@@ -47,7 +47,7 @@ class SubCategoryModel extends SubCategory {
   const SubCategoryModel({
     required super.id,
     required super.title,
-    required super.imageUrl,
+    super.imageUrl,
     required super.categoryId,
   });
 

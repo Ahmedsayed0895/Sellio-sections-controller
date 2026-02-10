@@ -13,13 +13,13 @@ class Category {
 class SubCategory {
   final String id;
   final String title;
-  final String imageUrl;
+  final String? imageUrl;
   final String categoryId;
 
   const SubCategory({
     required this.id,
     required this.title,
-    required this.imageUrl,
+    this.imageUrl,
     required this.categoryId,
   });
 }

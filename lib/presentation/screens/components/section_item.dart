@@ -237,15 +237,26 @@ class _CategorySectionItemState extends State<CategorySectionItem>
                                               children: [
                                                 CircleAvatar(
                                                   radius: 10,
-                                                  backgroundImage: NetworkImage(
-                                                    sub.imageUrl,
-                                                  ),
+                                                  backgroundImage:
+                                                      sub.imageUrl != null &&
+                                                          sub
+                                                              .imageUrl!
+                                                              .isNotEmpty
+                                                      ? NetworkImage(
+                                                          sub.imageUrl!,
+                                                        )
+                                                      : null,
                                                   onBackgroundImageError:
                                                       (_, __) {},
-                                                  child: const Icon(
-                                                    Icons.image_not_supported,
-                                                    size: 10,
-                                                  ),
+                                                  child:
+                                                      sub.imageUrl == null ||
+                                                          sub.imageUrl!.isEmpty
+                                                      ? const Icon(
+                                                          Icons
+                                                              .image_not_supported,
+                                                          size: 10,
+                                                        )
+                                                      : null,
                                                 ),
                                                 const SizedBox(width: 6),
                                                 Text(
