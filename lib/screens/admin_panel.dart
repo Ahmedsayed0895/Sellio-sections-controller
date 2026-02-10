@@ -1,34 +1,24 @@
 import 'package:flutter/material.dart';
-import '../models/section.dart';
-import '../controllers/admin_panel_controller.dart';
+import '../../domain/entities/section.dart';
+import '../../presentation/viewmodels/admin_panel_viewmodel.dart';
 import '../theme/app_colors.dart';
 import 'components/section_dialogs.dart';
 import 'components/section_item.dart';
 
 class AdminPanel extends StatefulWidget {
-  const AdminPanel({super.key});
+  final AdminPanelViewModel viewModel;
+
+  const AdminPanel({super.key, required this.viewModel});
 
   @override
   State<AdminPanel> createState() => _AdminPanelState();
 }
 
 class _AdminPanelState extends State<AdminPanel> {
-  late final AdminPanelController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AdminPanelController();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  AdminPanelViewModel get _viewModel => widget.viewModel;
 
   Future<void> _createSection(String title, String catId, int sortOrder) async {
-    final error = await _controller.createSection(title, catId, sortOrder);
+    final error = await _viewModel.addSection(title, catId, sortOrder);
     if (error == null) {
       _showSnack("Section created!", isError: false);
     } else {
@@ -37,15 +27,14 @@ class _AdminPanelState extends State<AdminPanel> {
   }
 
   Future<void> _updateSection(String id, Map<String, dynamic> updates) async {
-    final error = await _controller.updateSection(id, updates);
-    _controller.loadData();
+    final error = await _viewModel.editSection(id, updates);
     if (error != null) {
       _showSnack("Failed to update: $error", isError: true);
     }
   }
 
   Future<void> _deleteSection(String id) async {
-    final error = await _controller.deleteSection(id);
+    final error = await _viewModel.removeSection(id);
     if (error == null) {
       _showSnack("Section deleted", isError: false);
     } else {
@@ -68,8 +57,8 @@ class _AdminPanelState extends State<AdminPanel> {
     showDialog(
       context: context,
       builder: (_) => SectionDialog(
-        categories: _controller.categories,
-        initialSortOrder: _controller.sections.length + 1,
+        categories: _viewModel.categories,
+        initialSortOrder: _viewModel.sections.length + 1,
         onSave: (title, catId, sortOrder) {
           _createSection(title, catId, sortOrder);
         },
@@ -81,7 +70,7 @@ class _AdminPanelState extends State<AdminPanel> {
     showDialog(
       context: context,
       builder: (_) => SectionDialog(
-        categories: _controller.categories,
+        categories: _viewModel.categories,
         section: section,
         onSave: (title, catId, sortOrder) {
           final updates = <String, dynamic>{};
@@ -106,7 +95,7 @@ class _AdminPanelState extends State<AdminPanel> {
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _controller,
+      animation: _viewModel,
       builder: (context, child) {
         return Scaffold(
           appBar: AppBar(
@@ -114,15 +103,15 @@ class _AdminPanelState extends State<AdminPanel> {
             actions: [
               IconButton(
                 icon: const Icon(Icons.refresh),
-                onPressed: _controller.loadData,
+                onPressed: _viewModel.loadData,
               ),
             ],
           ),
-          body: _controller.isLoading
+          body: _viewModel.isLoading
               ? Center(
                   child: CircularProgressIndicator(color: AppColors.primary),
                 )
-              : _controller.errorMessage != null
+              : _viewModel.errorMessage != null
               ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -134,18 +123,18 @@ class _AdminPanelState extends State<AdminPanel> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        "Error loading data:\n${_controller.errorMessage}",
+                        "Error loading data:\n${_viewModel.errorMessage}",
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: _controller.loadData,
+                        onPressed: _viewModel.loadData,
                         child: const Text("Retry"),
                       ),
                     ],
                   ),
                 )
-              : _controller.sections.isEmpty
+              : _viewModel.sections.isEmpty
               ? Center(
                   child: Text(
                     "No sections yet.\nTap + to add one.",
@@ -155,10 +144,10 @@ class _AdminPanelState extends State<AdminPanel> {
                 )
               : ListView.builder(
                   padding: const EdgeInsets.only(bottom: 80, top: 16),
-                  itemCount: _controller.sections.length,
+                  itemCount: _viewModel.sections.length,
                   itemBuilder: (ctx, index) {
-                    final section = _controller.sections[index];
-                    final linkedCategory = _controller.categories
+                    final section = _viewModel.sections[index];
+                    final linkedCategory = _viewModel.categories
                         .where((c) => c.id == section.categoryId)
                         .firstOrNull;
 
