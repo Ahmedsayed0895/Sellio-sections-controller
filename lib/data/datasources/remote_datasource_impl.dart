@@ -27,11 +27,11 @@ class RemoteDataSourceImpl implements IRemoteDataSource {
   }
 
   @override
-  Future<SectionModel> createSection(SectionModel section) async {
+  Future<List<SectionModel>> createSection(SectionModel section) async {
     try {
       logger.i('Creating section: ${section.sectionTitle}');
       final created = await api.createSection(section);
-      logger.d('Created section: ${created.id}');
+      logger.d('Created sections list with ${created.length} items');
       return created;
     } catch (e) {
       throw _handleError(e);
