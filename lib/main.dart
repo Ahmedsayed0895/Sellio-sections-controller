@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'presentation/viewmodels/admin_panel_viewmodel.dart';
-import 'screens/admin_panel.dart';
-import 'theme/app_colors.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sellio_categories_section_controller/presentation/cubits/admin_panel_cubit.dart';
+import 'package:sellio_categories_section_controller/presentation/screens/admin_panel.dart';
+import 'package:sellio_categories_section_controller/presentation/theme/app_colors.dart';
 import 'injection.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   configureDependencies();
 
   runApp(const MyApp());
@@ -22,7 +22,10 @@ class MyApp extends StatelessWidget {
       title: 'Sellio Categories Section Controller',
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(),
-      home: AdminPanel(viewModel: getIt<AdminPanelViewModel>()),
+      home: BlocProvider(
+        create: (context) => getIt<AdminPanelCubit>(),
+        child: const AdminPanel(),
+      ),
     );
   }
 

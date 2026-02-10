@@ -26,7 +26,7 @@ import 'domain/usecases/delete_section.dart' as _i301;
 import 'domain/usecases/get_categories.dart' as _i664;
 import 'domain/usecases/get_sections.dart' as _i290;
 import 'domain/usecases/update_section.dart' as _i878;
-import 'presentation/viewmodels/admin_panel_viewmodel.dart' as _i254;
+import 'presentation/cubits/admin_panel_cubit.dart' as _i190;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -64,8 +64,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i664.GetCategories>(
       () => _i664.GetCategories(gh<_i615.ICategoryRepository>()),
     );
-    gh.factory<_i254.AdminPanelViewModel>(
-      () => _i254.AdminPanelViewModel(
+    gh.factory<_i190.AdminPanelCubit>(
+      () => _i190.AdminPanelCubit(
         getSections: gh<_i290.GetSections>(),
         createSection: gh<_i1042.CreateSection>(),
         updateSection: gh<_i878.UpdateSection>(),
