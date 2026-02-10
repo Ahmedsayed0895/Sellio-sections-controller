@@ -6,6 +6,7 @@ import '../cubits/admin_panel_state.dart';
 import '../theme/app_colors.dart';
 import 'components/section_dialogs.dart';
 import 'components/section_item.dart';
+import 'components/section_shimmer.dart';
 
 class AdminPanel extends StatefulWidget {
   const AdminPanel({super.key});
@@ -101,9 +102,7 @@ class _AdminPanelState extends State<AdminPanel> {
             ],
           ),
           body: state.status == AdminPanelStatus.loading
-              ? Center(
-                  child: CircularProgressIndicator(color: AppColors.primary),
-                )
+              ? const SectionShimmerList()
               : state.status == AdminPanelStatus.failure
               ? Center(
                   child: Column(
