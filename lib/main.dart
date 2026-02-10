@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'presentation/viewmodels/admin_panel_viewmodel.dart';
 import 'screens/admin_panel.dart';
 import 'theme/app_colors.dart';
 
+import 'injection.dart';
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 1. Initialize Dependency Injection
+  configureDependencies();
+
   runApp(const MyApp());
 }
 
@@ -15,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Sellio Categories Section Controller',
       debugShowCheckedModeBanner: false,
       theme: _buildTheme(),
-      home: const AdminPanel(),
+      home: AdminPanel(viewModel: getIt<AdminPanelViewModel>()),
     );
   }
 
