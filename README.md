@@ -6,7 +6,7 @@ A powerful admin panel for managing Home Screen Category Sections in the Sellio 
 
 ---
 
-## 📚 Learn Clean Architecture — Chapter by Chapter
+##  Learn Clean Architecture — Chapter by Chapter
 
 > **This project is not just an app — it's a guided course.**
 >
@@ -24,7 +24,7 @@ A powerful admin panel for managing Home Screen Category Sections in the Sellio 
 | 6   | [The Brain — Cubit State Management](app_story/06_the_brain.md)         | Cubit, states, and reactive UI                   |
 | 7   | [The Face — UI Layer](app_story/07_the_face.md)                         | Screens, components, and user interactions       |
 
-### 📖 Technical Deep Dives
+### Technical Deep Dives
 
 | Guide                                                  | Description                                       |
 | ------------------------------------------------------ | ------------------------------------------------- |
@@ -118,6 +118,6 @@ lib/
 │   └── theme/
 └── main.dart         # Entry point
 
-app_story/            # 📚 Chapter-by-chapter architecture guide
-docs/                 # 📖 Technical deep-dive documentation
+app_story/            #  Chapter-by-chapter architecture guide
+docs/                 #  Technical deep-dive documentation
 ```
