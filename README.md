@@ -94,3 +94,4 @@ lib/
 - [Retrofit & Networking](docs/retrofit_details.md)
 - [Dependency Injection Guide](docs/dependency_injection.md)
 - [Release Automation](docs/release_automation_guide.md)
+- [Atomic Commits Guide](docs/atomic_commits_guide.md)
