@@ -1,5 +1,7 @@
 # Sellio Categories Section Controller
 
+[![Latest Release](https://img.shields.io/github/v/release/Ahmedsayed0895/Sellio-sections-controller)](https://github.com/Ahmedsayed0895/Sellio-sections-controller/releases/latest)
+
 A Panel that designed for managing Home Screen Category Sections in the Sellio application. This tool empowers administrators to organize, prioritize, and manage the visibility of product categories with a seamless and responsive user interface.
 
 ## Key Features
@@ -70,3 +72,8 @@ lib/
 4.  **Delete a Section**: Click the trash icon on a section card to permanently remove it.
 
 
+## Release Notes
+
+### v1.0.1
+*   **Fix**: Resolved API initialization error where `remoteBaseUrl` was accessed before initialization.
+*   **Improvement**: Enhanced API response parsing to robustly handle both `List` and wrapped `Map` responses (e.g. `{ "data": [...] }`) from the backend.
