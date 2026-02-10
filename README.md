@@ -24,12 +24,13 @@ graph TD
     Cubit --> UseCase[Domain Use Case]
     UseCase --> RepoInterface[Domain Repository Interface]
     RepoImpl[Data Repository Implementation] --> RepoInterface
+    RepoImpl --> Mapper[Data Mapper]
     RepoImpl --> DataSource[Data Data Source]
     DataSource --> API[External API]
 ```
 
-- **Domain Layer**: Contains Entities, Use Case, and Repository Interfaces. Pure Dart, no dependencies.
-- **Data Layer**: Implements Repositories, defines Models, and handles Data Sources (API/DB).
+- **Domain Layer**: Contains Entities, Use Cases, and Repository Interfaces. Pure Dart, no dependencies.
+- **Data Layer**: Implements Repositories, defines Models and Mappers, and handles Data Sources (API/DB).
 - **Presentation Layer**: UI (Screens) and State Management (Cubits).
 
 > [!NOTE]
@@ -81,7 +82,11 @@ graph TD
 ```
 lib/
 ├── domain/           # Business logic (Entities, Use Cases, Repos)
-├── data/             # Data implementation (Models, APIs, Repos Impl)
+├── data/             # Data implementation (Models, Mappers, APIs, Repos Impl)
+│   ├── models/
+│   ├── mappers/
+│   ├── datasources/
+│   └── repositories/
 ├── presentation/     # UI and Cubits
 │   ├── screens/
 │   ├── cubits/
@@ -96,4 +101,4 @@ lib/
 - [Retrofit & Networking](docs/retrofit_details.md)
 - [Dependency Injection Guide](docs/dependency_injection.md)
 - [Release Automation](docs/release_automation_guide.md)
-- [Atomic Commits Guide](docs/atomic_commits_guide.md)
+- [App Story](app_story/) — A chapter-by-chapter guide explaining every line of the project
