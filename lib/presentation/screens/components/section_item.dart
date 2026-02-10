@@ -221,8 +221,11 @@ class _CategorySectionItemState extends State<CategorySectionItem>
                                     children: widget
                                         .linkedCategory!
                                         .subCategories
-                                        .map(
-                                          (sub) => Container(
+                                        .map((sub) {
+                                          final hasImage =
+                                              sub.imageUrl != null &&
+                                              sub.imageUrl!.isNotEmpty;
+                                          return Container(
                                             padding: const EdgeInsets.all(4),
                                             decoration: BoxDecoration(
                                               color: Colors.grey.shade100,
@@ -237,20 +240,16 @@ class _CategorySectionItemState extends State<CategorySectionItem>
                                               children: [
                                                 CircleAvatar(
                                                   radius: 10,
-                                                  backgroundImage:
-                                                      sub.imageUrl != null &&
-                                                          sub
-                                                              .imageUrl!
-                                                              .isNotEmpty
+                                                  backgroundImage: hasImage
                                                       ? NetworkImage(
                                                           sub.imageUrl!,
                                                         )
                                                       : null,
                                                   onBackgroundImageError:
-                                                      (_, __) {},
-                                                  child:
-                                                      sub.imageUrl == null ||
-                                                          sub.imageUrl!.isEmpty
+                                                      hasImage
+                                                      ? (_, __) {}
+                                                      : null,
+                                                  child: !hasImage
                                                       ? const Icon(
                                                           Icons
                                                               .image_not_supported,
@@ -270,8 +269,8 @@ class _CategorySectionItemState extends State<CategorySectionItem>
                                                 const SizedBox(width: 4),
                                               ],
                                             ),
-                                          ),
-                                        )
+                                          );
+                                        })
                                         .toList(),
                                   )
                                 else

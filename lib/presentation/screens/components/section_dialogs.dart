@@ -147,17 +147,18 @@ class _SectionDialogState extends State<SectionDialog> {
                           spacing: 4.0,
                           runSpacing: -8.0,
                           children: selectedCategory.subCategories.map((sub) {
+                            final hasImage =
+                                sub.imageUrl != null &&
+                                sub.imageUrl!.isNotEmpty;
                             return Chip(
                               avatar: CircleAvatar(
-                                backgroundImage:
-                                    sub.imageUrl != null &&
-                                        sub.imageUrl!.isNotEmpty
+                                backgroundImage: hasImage
                                     ? NetworkImage(sub.imageUrl!)
                                     : null,
-                                onBackgroundImageError: (_, __) {},
-                                child:
-                                    sub.imageUrl == null ||
-                                        sub.imageUrl!.isEmpty
+                                onBackgroundImageError: hasImage
+                                    ? (_, __) {}
+                                    : null,
+                                child: !hasImage
                                     ? const Icon(
                                         Icons.image_not_supported,
                                         size: 12,
