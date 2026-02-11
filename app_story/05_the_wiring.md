@@ -1,4 +1,4 @@
-# Chapter 5: The Wiring — Dependency Injection
+# Chapter 5: The Wiring .. Dependency Injection
 
 > *"DI is an electrician. It connects the right wires to the right sockets so everything just works."*
 
@@ -11,7 +11,7 @@ We've built all the pieces: Entities, Models, API, Data Sources, Repositories, U
 Without DI, you'd create everything manually:
 
 ```dart
-// ❌ THE UGLY WAY — Creating everything by hand
+// ❌ THE UGLY WAY .. Creating everything by hand
 void main() {
   final dio = Dio(BaseOptions(baseUrl: 'https://app.sell-io.app/v1'));
   final api = SellioApi(dio);
@@ -42,7 +42,7 @@ That's 12 lines of wiring! And every time you add a new dependency, you have to 
 With DI, you write annotations on your classes, and a code generator wires everything together automatically:
 
 ```dart
-// ✅ THE CLEAN WAY — Let the robot do it
+// ✅ THE CLEAN WAY .. Let the robot do it
 void main() {
   configureDependencies();  // One line. Done.
   runApp(const MyApp());
@@ -73,10 +73,10 @@ void configureDependencies() => getIt.init(); // 6
 ### Line-by-line:
 
 #### Line 1: `GetIt`
-The **Service Locator** — a big dictionary that maps types to instances. You ask it: "Give me an `ISectionRepository`" and it returns the correct object.
+The **Service Locator** .. a big dictionary that maps types to instances. You ask it: "Give me an `ISectionRepository`" and it returns the correct object.
 
 #### Line 4: `final getIt = GetIt.instance;`
-`GetIt` is a **Singleton** — there's only one dictionary for the entire app. `GetIt.instance` gives us that single instance. We store it in a global variable for easy access.
+`GetIt` is a **Singleton** .. there's only one dictionary for the entire app. `GetIt.instance` gives us that single instance. We store it in a global variable for easy access.
 
 #### Line 5-6: `@InjectableInit(...)`
 This annotation tells the code generator: "Generate a function called `init()` that registers all annotated classes into GetIt."
@@ -84,7 +84,7 @@ This annotation tells the code generator: "Generate a function called `init()` t
 The generated code (`injection.config.dart`) looks like this:
 
 ```dart
-// AUTO-GENERATED — key parts simplified
+// AUTO-GENERATED .. key parts simplified
 extension GetItInjectableX on GetIt {
   GetIt init(...) {
     // Step 1: Register third-party libraries
@@ -130,7 +130,7 @@ The generator figures all of this out from your annotations!
 
 ## Step 2: Registering Third-Party Libraries (register_module.dart)
 
-Some classes (like `Dio`) come from external packages — we can't add `@injectable` annotations to them. So we use a **module**:
+Some classes (like `Dio`) come from external packages .. we can't add `@injectable` annotations to them. So we use a **module**:
 
 ```dart
 // File: lib/data/register_module.dart
@@ -177,7 +177,7 @@ Accept ALL HTTP status codes (even errors like 404 or 500). This lets us handle 
 The API authentication token. Every request includes this header so the server knows who's calling.
 
 #### Line 7: `SellioApi getSellioApi(Dio dio) => SellioApi(dio);`
-Creates the Retrofit API client. Notice `Dio dio` is a parameter — the generator automatically resolves it from the registration above!
+Creates the Retrofit API client. Notice `Dio dio` is a parameter .. the generator automatically resolves it from the registration above!
 
 ---
 
@@ -227,4 +227,4 @@ Why is the Cubit a **factory**? Because if you navigate away from the Admin Pane
 
 ---
 
-**Next Chapter:** The brain of the UI — Cubit and state management.
+**Next Chapter:** The brain of the UI .. Cubit and state management.

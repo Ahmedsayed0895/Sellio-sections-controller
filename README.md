@@ -2,29 +2,29 @@
 
 [![Latest Release](https://img.shields.io/github/v/release/Ahmedsayed0895/Sellio-sections-controller)](https://github.com/Ahmedsayed0895/Sellio-sections-controller/releases/latest)
 
-A powerful admin panel for managing Home Screen Category Sections in the Sellio application — built with **Clean Architecture**, **Cubit**, and **Retrofit**, and fully documented as a **learning resource** for Flutter developers.
+A powerful admin panel for managing Home Screen Category Sections in the Sellio application .. built with **Clean Architecture**, **Cubit**, and **Retrofit**, and fully documented as a **learning resource** for Flutter developers.
 
 ---
 
-##  Learn Clean Architecture — Chapter by Chapter
+## 📚  Clean Architecture .. Chapter by Chapter
 
-> **This project is not just an app — it's a guided course.**
+> **This project is not just an app .. it's a guided course.**
 >
 > Every architectural decision, every layer, every line of code is explained in a beginner-friendly **App Story** that walks you through building a real-world Flutter app using Clean Architecture.
 
-| #   | Chapter                                                                 | What You'll Learn                                |
-| --- | ----------------------------------------------------------------------- | ------------------------------------------------ |
-| 0   | [Introduction](app_story/00_introduction.md)                            | Project overview and architecture map            |
-| 1   | [The Foundation — Entities](app_story/01_the_foundation.md)             | Domain entities and business objects             |
-| 2   | [The Translator — Models & JSON](app_story/02_the_translator.md)        | Data models, JSON serialization, code generation |
-| 3   | [The Messenger — API & Data Sources](app_story/03_the_messenger.md)     | Retrofit, Dio, and remote data sources           |
-| 3.5 | [The Bridge — Mappers](app_story/03b_the_bridge.md)                     | Decoupling models from entities with mappers     |
-| 4   | [The Rulebook — Repositories & Use Cases](app_story/04_the_rulebook.md) | Repository pattern and single-purpose use cases  |
-| 5   | [The Wiring — Dependency Injection](app_story/05_the_wiring.md)         | GetIt, Injectable, and auto-wiring               |
-| 6   | [The Brain — Cubit State Management](app_story/06_the_brain.md)         | Cubit, states, and reactive UI                   |
-| 7   | [The Face — UI Layer](app_story/07_the_face.md)                         | Screens, components, and user interactions       |
+| #   | Chapter                                                                  | What You'll Story                                |
+| --- | ------------------------------------------------------------------------ | ------------------------------------------------ |
+| 0   | [Introduction](app_story/00_introduction.md)                             | Project overview and architecture map            |
+| 1   | [The Foundation .. Entities](app_story/01_the_foundation.md)             | Domain entities and business objects             |
+| 2   | [The Translator .. Models & JSON](app_story/02_the_translator.md)        | Data models, JSON serialization, code generation |
+| 3   | [The Messenger .. API & Data Sources](app_story/03_the_messenger.md)     | Retrofit, Dio, and remote data sources           |
+| 3.5 | [The Bridge .. Mappers](app_story/03b_the_bridge.md)                     | Decoupling models from entities with mappers     |
+| 4   | [The Rulebook .. Repositories & Use Cases](app_story/04_the_rulebook.md) | Repository pattern and single-purpose use cases  |
+| 5   | [The Wiring .. Dependency Injection](app_story/05_the_wiring.md)         | GetIt, Injectable, and auto-wiring               |
+| 6   | [The Brain .. Cubit State Management](app_story/06_the_brain.md)         | Cubit, states, and reactive UI                   |
+| 7   | [The Face .. UI Layer](app_story/07_the_face.md)                         | Screens, components, and user interactions       |
 
-### Technical Deep Dives
+###  Technical Deep Dives
 
 | Guide                                                  | Description                                       |
 | ------------------------------------------------------ | ------------------------------------------------- |
@@ -60,9 +60,11 @@ graph TD
     DataSource --> API[External API]
 ```
 
-- **Domain Layer**: Entities, Use Cases, Repository Interfaces — pure Dart, zero dependencies
+- **Domain Layer**: Entities, Use Cases, Repository Interfaces .. pure Dart, zero dependencies
 - **Data Layer**: Models, Mappers, Data Sources, Repository Implementations
 - **Presentation Layer**: Screens, Components, Cubits, Theme
+> [!NOTE]
+> For a deep dive into the architecture, check out [Clean Architecture in Sellio](docs/clean_architecture.md).
 
 ## Technology Stack
 
@@ -72,6 +74,8 @@ graph TD
 *   **Networking**: [Retrofit](https://pub.dev/packages/retrofit) & [Dio](https://pub.dev/packages/dio)
 *   **Serialization**: [json_serializable](https://pub.dev/packages/json_serializable)
 *   **Loading Effects**: [shimmer](https://pub.dev/packages/shimmer)
+> [!TIP]
+> Learn more about our networking layer in [Retrofit Details](docs/retrofit_details.md).
 
 ## Getting Started
 
@@ -118,6 +122,6 @@ lib/
 │   └── theme/
 └── main.dart         # Entry point
 
-app_story/            #  Chapter-by-chapter architecture guide
-docs/                 #  Technical deep-dive documentation
+app_story/            # Chapter-by-chapter architecture guide
+docs/                 # Technical deep-dive documentation
 ```

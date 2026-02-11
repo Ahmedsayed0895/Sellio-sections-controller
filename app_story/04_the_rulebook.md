@@ -1,8 +1,8 @@
-# Chapter 4: The Rulebook — Repositories & Use Cases
+# Chapter 4: The Rulebook .. Repositories & Use Cases
 
 > *"Repositories are the gatekeepers. Use Cases are the rules."*
 
-This is the **Domain Layer** — the heart of Clean Architecture. It contains the business rules that are independent of any framework, database, or UI.
+This is the **Domain Layer** .. the heart of Clean Architecture. It contains the business rules that are independent of any framework, database, or UI.
 
 ---
 
@@ -67,7 +67,7 @@ class LocalSectionRepository implements ISectionRepository { ... }
 class FakeSectionRepository implements ISectionRepository { ... }
 ```
 
-The UI and business logic don't care which one they're talking to — they only know about `ISectionRepository`.
+The UI and business logic don't care which one they're talking to .. they only know about `ISectionRepository`.
 
 #### Notice: Return types use ENTITIES, not MODELS
 
@@ -75,7 +75,7 @@ The UI and business logic don't care which one they're talking to — they only 
 Future<List<CategorySection>> getSections();  // ← CategorySection, NOT SectionModel
 ```
 
-The repository returns **entities** (`CategorySection`), not **models** (`SectionModel`). This keeps the domain layer pure — it doesn't know about JSON, APIs, or any data-layer concerns.
+The repository returns **entities** (`CategorySection`), not **models** (`SectionModel`). This keeps the domain layer pure .. it doesn't know about JSON, APIs, or any data-layer concerns.
 
 ### Category Repository
 
@@ -89,7 +89,7 @@ abstract class ICategoryRepository {
 }
 ```
 
-This one is simpler — we only READ categories, never create/update/delete them from this app.
+This one is simpler .. we only READ categories, never create/update/delete them from this app.
 
 ---
 
@@ -141,12 +141,12 @@ class SectionRepositoryImpl implements ISectionRepository {     // 2
 The repository depends on a data source. Notice it uses the INTERFACE `IRemoteDataSource`, not the concrete `RemoteDataSourceImpl`. This is called **Dependency Inversion**.
 
 #### Line 4: `SectionRepositoryImpl(this.dataSource);`
-**Constructor injection.** The data source is passed in from outside. The repository doesn't create it — it receives it.
+**Constructor injection.** The data source is passed in from outside. The repository doesn't create it .. it receives it.
 
 #### Line 5: `return await dataSource.fetchSections();`
 Simply delegates to the data source. "Hey data source, fetch me the sections."
 
-The magic here is that `dataSource.fetchSections()` returns `List<SectionModel>`, but our method signature says `List<CategorySection>`. This works because `SectionModel extends CategorySection` — every SectionModel IS a CategorySection.
+The magic here is that `dataSource.fetchSections()` returns `List<SectionModel>`, but our method signature says `List<CategorySection>`. This works because `SectionModel extends CategorySection` .. every SectionModel IS a CategorySection.
 
 #### Line 6: `final model = SectionModel.fromEntity(section);`
 Before sending to the data source, we convert the entity to a model. The data source needs a `SectionModel` (with `toJson()`), but the use case only knows about `CategorySection`.
@@ -179,15 +179,15 @@ class GetSections {
 ```
 
 #### Line 1: `@lazySingleton`
-Only one instance of this use case exists. Makes sense — the "get sections" rule doesn't change.
+Only one instance of this use case exists. Makes sense .. the "get sections" rule doesn't change.
 
 #### Line 2: `final ISectionRepository repository`
 The use case talks to the repository INTERFACE. It doesn't know (or care) how data is actually fetched.
 
 #### Line 3: `GetSections(this.repository);`
-The repository is injected through the constructor. This makes testing easy — you can pass a fake repository.
+The repository is injected through the constructor. This makes testing easy .. you can pass a fake repository.
 
-#### Line 4: `call()` — The Special Method
+#### Line 4: `call()` .. The Special Method
 The `call()` method is special in Dart. It lets you use the object like a function:
 
 ```dart
@@ -205,7 +205,7 @@ When a class has a `call()` method, you can invoke it by just adding `()` to the
 They all follow the exact same pattern:
 
 ```dart
-// CreateSection — creates a new section
+// CreateSection .. creates a new section
 class CreateSection {
   final ISectionRepository repository;
   CreateSection(this.repository);
@@ -214,7 +214,7 @@ class CreateSection {
   }
 }
 
-// UpdateSection — updates an existing section
+// UpdateSection .. updates an existing section
 class UpdateSection {
   final ISectionRepository repository;
   UpdateSection(this.repository);
@@ -223,7 +223,7 @@ class UpdateSection {
   }
 }
 
-// DeleteSection — removes a section
+// DeleteSection .. removes a section
 class DeleteSection {
   final ISectionRepository repository;
   DeleteSection(this.repository);
@@ -232,7 +232,7 @@ class DeleteSection {
   }
 }
 
-// GetCategories — fetches all categories
+// GetCategories .. fetches all categories
 class GetCategories {
   final ICategoryRepository repository;
   GetCategories(this.repository);
@@ -257,7 +257,7 @@ Great question! Use Cases serve as **documentation** of what the app can do:
 
 Just by looking at the folder, you know ALL the operations the app supports. No need to read any code!
 
-They also serve as a **single point of change**. If the business rule for "create section" needs validation (e.g., "title must be at least 3 characters"), you add it HERE — not in the UI, not in the repository, but in the Use Case.
+They also serve as a **single point of change**. If the business rule for "create section" needs validation (e.g., "title must be at least 3 characters"), you add it HERE .. not in the UI, not in the repository, but in the Use Case.
 
 ---
 

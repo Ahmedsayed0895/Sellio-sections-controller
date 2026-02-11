@@ -1,4 +1,4 @@
-# Chapter 6: The Brain — State Management with Cubit
+# Chapter 6: The Brain .. State Management with Cubit
 
 > *"The UI is the face. The Cubit is the brain behind it."*
 
@@ -94,7 +94,7 @@ print(a == b); // true ✅ (same values = same state)
 ```
 
 #### Line 2: `enum AdminPanelStatus { initial, loading, success, failure }`
-An **enum** (enumeration) is a fixed set of possible values. Like a traffic light can only be red, yellow, or green — the screen status can only be one of these four values:
+An **enum** (enumeration) is a fixed set of possible values. Like a traffic light can only be red, yellow, or green .. the screen status can only be one of these four values:
 
 | Status    | Meaning              | UI Shows      |
 | --------- | -------------------- | ------------- |
@@ -157,7 +157,7 @@ Registers with GetIt as a **factory** (new instance each time). A new Cubit = fr
 ```dart
 final GetSections _getSections;
 ```
-The underscore `_` makes this field **private** — only this class can access it. The UI can't call `cubit._getSections()` directly. It must use the cubit's public methods (like `loadData()`).
+The underscore `_` makes this field **private** .. only this class can access it. The UI can't call `cubit._getSections()` directly. It must use the cubit's public methods (like `loadData()`).
 
 #### Line 5: Initializer list
 ```dart
@@ -173,7 +173,7 @@ Automatically loads data as soon as the cubit is created. No need for the UI to 
 
 ---
 
-## The loadData Method — A Complete Walkthrough
+## The loadData Method .. A Complete Walkthrough
 
 ```dart
 Future<void> loadData() async {
@@ -223,7 +223,7 @@ Future<void> loadData() async {
 ### The `emit` function
 `emit(newState)` is the **magic word**. It broadcasts a new state to all listeners (the UI). The UI automatically rebuilds with the new data.
 
-### `Future.wait` — Parallel execution
+### `Future.wait` .. Parallel execution
 ```dart
 final results = await Future.wait([_getSections(), _getCategories()]);
 ```
@@ -234,7 +234,7 @@ Why merge? Because the server only returns **active** sections. If the admin jus
 
 ---
 
-## Optimistic UI — The Delete Example
+## Optimistic UI .. The Delete Example
 
 ```dart
 Future<void> removeSection(String id) async {
@@ -259,7 +259,7 @@ Future<void> removeSection(String id) async {
 }
 ```
 
-This is called **Optimistic UI** — we assume the operation will succeed and update the UI immediately. If it fails, we revert. This makes the app feel incredibly fast because the user sees the change instantly.
+This is called **Optimistic UI** .. we assume the operation will succeed and update the UI immediately. If it fails, we revert. This makes the app feel incredibly fast because the user sees the change instantly.
 
 ---
 
@@ -278,4 +278,4 @@ This is called **Optimistic UI** — we assume the operation will succeed and up
 
 ---
 
-**Next Chapter:** The final piece — building the UI that brings everything to life.
+**Next Chapter:** The final piece .. building the UI that brings everything to life.

@@ -1,14 +1,14 @@
-# Chapter 7: The Face — Building the UI
+# Chapter 7: The Face .. Building the UI
 
 > *"All the layers below exist to serve this one. This is what the user sees."*
 
-We've built the foundation (Entities), the translator (Models), the messenger (API), the rulebook (Use Cases), the wiring (DI), and the brain (Cubit). Now it's time for the **face** — the actual screen the admin interacts with.
+We've built the foundation (Entities), the translator (Models), the messenger (API), the rulebook (Use Cases), the wiring (DI), and the brain (Cubit). Now it's time for the **face** .. the actual screen the admin interacts with.
 
 ---
 
 ## Where Does It All Start?
 
-### main.dart — The Entry Point
+### main.dart .. The Entry Point
 
 ```dart
 // File: lib/main.dart
@@ -78,7 +78,7 @@ Without `BlocProvider`, the `AdminPanel` couldn't access the cubit. It's like pl
 
 ---
 
-## The Theme — AppColors
+## The Theme .. AppColors
 
 ```dart
 // File: lib/presentation/theme/app_colors.dart
@@ -112,7 +112,7 @@ class AppColors {
 
 ---
 
-## The Admin Panel — The Main Screen
+## The Admin Panel .. The Main Screen
 
 ```dart
 // File: lib/presentation/screens/admin_panel.dart
@@ -147,7 +147,7 @@ void _deleteSection(String id) {
 ```
 
 #### `context.read<AdminPanelCubit>()`
-This grabs the cubit that `BlocProvider` provided. `read` doesn't listen for changes — it just gets the cubit instance.
+This grabs the cubit that `BlocProvider` provided. `read` doesn't listen for changes .. it just gets the cubit instance.
 
 - `context.read<T>()` → Get the instance (use in event handlers)
 - `context.watch<T>()` → Get the instance AND rebuild when it changes (use in `build()`)
@@ -171,14 +171,14 @@ void _showSnack(String msg, {bool isError = false}) {
 Safety check. If the widget has been removed from the screen (e.g., the user navigated away), we don't try to show a snackbar. This prevents crashes.
 
 #### Line 2: Conditional color
-`isError ? red : green` — Error messages are red, success messages are green.
+`isError ? red : green` .. Error messages are red, success messages are green.
 
 #### Line 3: `SnackBarBehavior.floating`
 Makes the snackbar float above the content instead of sticking to the bottom.
 
 ---
 
-## The build() Method — Where the Magic Happens
+## The build() Method .. Where the Magic Happens
 
 ```dart
 @override
@@ -252,14 +252,14 @@ body: state.status == AdminPanelStatus.loading
     : ListView.builder(...)     // Otherwise → show the list
 ```
 
-This is **declarative UI** — you describe what the screen SHOULD look like for each condition, and Flutter figures out how to transition between them. You don't say "hide the spinner and show the list." You say "if loading, show spinner; if not, show list."
+This is **declarative UI** .. you describe what the screen SHOULD look like for each condition, and Flutter figures out how to transition between them. You don't say "hide the spinner and show the list." You say "if loading, show spinner; if not, show list."
 
 ### Line 5: FloatingActionButton
 The "+" button that opens the Add Section dialog.
 
 ---
 
-## The ListView — Rendering Sections
+## The ListView .. Rendering Sections
 
 ```dart
 ListView.builder(
@@ -328,7 +328,7 @@ Let's trace what happens when the user taps "Add Section":
 16. ListView shows the new section! ✅
 ```
 
-That's 16 steps across 7 layers — but each layer only knows about the one directly below it. This is the beauty of Clean Architecture.
+That's 16 steps across 7 layers .. but each layer only knows about the one directly below it. This is the beauty of Clean Architecture.
 
 ---
 
@@ -348,7 +348,7 @@ That's 16 steps across 7 layers — but each layer only knows about the one dire
 
 ## The End! 🎉
 
-You've just walked through the **entire** application — from raw JSON to the pixel on screen. Every line of code has a purpose, every layer has a role, and every design decision was made to keep the code clean, testable, and maintainable.
+You've just walked through the **entire** application .. from raw JSON to the pixel on screen. Every line of code has a purpose, every layer has a role, and every design decision was made to keep the code clean, testable, and maintainable.
 
 The journey:
 1. **Entities** define WHAT exists

@@ -1,4 +1,4 @@
-# Chapter 3.5: The Bridge — Mappers
+# Chapter 3.5: The Bridge .. Mappers
 
 > *"Models and Entities speak different languages. Mappers are the interpreters."*
 
@@ -10,12 +10,12 @@ This is where **Mappers** come in.
 
 ## How It Was Before Mappers
 
-Before we see the new approach, let's look at **exactly how the code worked** when models inherited from entities. This was the implementation in earlier chapters — and it's how many Flutter tutorials teach it.
+Before we see the new approach, let's look at **exactly how the code worked** when models inherited from entities. This was the implementation in earlier chapters .. and it's how many Flutter tutorials teach it.
 
-### Old SectionModel — Model Extends Entity
+### Old SectionModel .. Model Extends Entity
 
 ```dart
-// ❌ THE OLD WAY — section_model.dart
+// ❌ THE OLD WAY .. section_model.dart
 
 import 'package:json_annotation/json_annotation.dart';
 import '../../domain/entities/section.dart';             // 1
@@ -53,19 +53,19 @@ class SectionModel extends CategorySection {             // 2
 
 #### What's happening here?
 
-| Line  | What It Does                                                             | The Problem                                                   |
-| ----- | ------------------------------------------------------------------------ | ------------------------------------------------------------- |
-| **1** | Imports the Entity from the domain layer                                 | Data layer now **depends on** domain layer through import     |
-| **2** | `extends CategorySection` — inherits ALL entity fields                   | Model IS an entity — no separation                            |
-| **3** | `super.id`, `super.sectionTitle` — passes fields up to the parent Entity | Tight coupling: if Entity adds a field, Model must update too |
-| **4** | `fromEntity()` — converts an Entity to a Model                           | Conversion logic lives INSIDE the model (not its job)         |
+| Line  | What It Does                                                              | The Problem                                                   |
+| ----- | ------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| **1** | Imports the Entity from the domain layer                                  | Data layer now **depends on** domain layer through import     |
+| **2** | `extends CategorySection` .. inherits ALL entity fields                   | Model IS an entity .. no separation                           |
+| **3** | `super.id`, `super.sectionTitle` .. passes fields up to the parent Entity | Tight coupling: if Entity adds a field, Model must update too |
+| **4** | `fromEntity()` .. converts an Entity to a Model                           | Conversion logic lives INSIDE the model (not its job)         |
 
 **The sneaky trick:** Because `SectionModel extends CategorySection`, everywhere the code expects a `CategorySection`, you can pass a `SectionModel` directly. The repository didn't even need to convert:
 
-### Old Repository — No Conversion Needed (Because of Inheritance)
+### Old Repository .. No Conversion Needed (Because of Inheritance)
 
 ```dart
-// ❌ THE OLD WAY — section_repository_impl.dart
+// ❌ THE OLD WAY .. section_repository_impl.dart
 
 class SectionRepositoryImpl implements ISectionRepository {
   final IRemoteDataSource dataSource;
@@ -86,13 +86,13 @@ class SectionRepositoryImpl implements ISectionRepository {
 | Line  | What It Does                                                     | The Problem                                                      |
 | ----- | ---------------------------------------------------------------- | ---------------------------------------------------------------- |
 | **1** | Returns `List<SectionModel>` directly as `List<CategorySection>` | Works ONLY because Model extends Entity. No explicit conversion. |
-| **2** | Uses `fromEntity()` on the Model itself                          | The Model is doing conversion — that's not its job.              |
+| **2** | Uses `fromEntity()` on the Model itself                          | The Model is doing conversion .. that's not its job.             |
 | **3** | Returns the created model directly as an entity                  | Again, works through inheritance magic, not explicit design.     |
 
-### Old CategoryModel — Same Pattern
+### Old CategoryModel .. Same Pattern
 
 ```dart
-// ❌ THE OLD WAY — category_model.dart
+// ❌ THE OLD WAY .. category_model.dart
 
 class SubCategoryModel extends SubCategory {           // extends!
   const SubCategoryModel({
@@ -118,13 +118,13 @@ class CategoryModel extends Category {                 // extends!
 
 This approach **works**, but it violates Clean Architecture:
 
-| Issue                      | Explanation                                                                                                            |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| **Tight coupling**         | Changing `CategorySection` (entity) forces changes in `SectionModel` (model)                                           |
-| **Mixed responsibilities** | The Model handles JSON AND entity conversion (`fromEntity`)                                                            |
-| **Invisible conversion**   | Data passes between layers with no explicit boundary — you can't see where "data world" ends and "domain world" begins |
-| **Testing difficulty**     | You can't mock the conversion independently                                                                            |
-| **Leaking concerns**       | JSON annotations from models technically exist on entities (through inheritance)                                       |
+| Issue                      | Explanation                                                                                                             |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Tight coupling**         | Changing `CategorySection` (entity) forces changes in `SectionModel` (model)                                            |
+| **Mixed responsibilities** | The Model handles JSON AND entity conversion (`fromEntity`)                                                             |
+| **Invisible conversion**   | Data passes between layers with no explicit boundary .. you can't see where "data world" ends and "domain world" begins |
+| **Testing difficulty**     | You can't mock the conversion independently                                                                             |
+| **Leaking concerns**       | JSON annotations from models technically exist on entities (through inheritance)                                        |
 
 **In true Clean Architecture, layers should be independent.** The Entity shouldn't know about JSON, and the Model shouldn't care about business rules. That's where **Mappers** come in.
 
@@ -144,7 +144,7 @@ Mappers live in the **data layer** because they know about Models (which are dat
 
 ---
 
-## SectionMapper — A Two-Way Bridge
+## SectionMapper .. A Two-Way Bridge
 
 ```dart
 // File: lib/data/mappers/section_mapper.dart
@@ -184,17 +184,17 @@ class SectionMapper {
 #### Line 1: `static CategorySection toEntity(SectionModel model)`
 - `static` means you call it on the class, not an instance: `SectionMapper.toEntity(model)`
 - Takes a `SectionModel` (data layer) and returns a `CategorySection` (domain layer)
-- This is used when **reading** data — the API gives us a Model, we convert it to an Entity for the rest of the app
+- This is used when **reading** data .. the API gives us a Model, we convert it to an Entity for the rest of the app
 
 #### Line 2: `static SectionModel toModel(CategorySection entity)`
-- The reverse direction — Entity to Model
-- This is used when **writing** data — the Cubit gives us an Entity, we convert it to a Model to send to the API
+- The reverse direction .. Entity to Model
+- This is used when **writing** data .. the Cubit gives us an Entity, we convert it to a Model to send to the API
 
 **Simple analogy:** Imagine you're at an airport. The `toEntity` function is like converting foreign currency to your local currency (making it usable in your domain). The `toModel` function is converting your local currency back to foreign currency (making it sendable to the API/server).
 
 ---
 
-## CategoryMapper — A One-Way Bridge
+## CategoryMapper .. A One-Way Bridge
 
 ```dart
 // File: lib/data/mappers/category_mapper.dart
@@ -231,7 +231,7 @@ class CategoryMapper {
 
 ### Why only `toEntity`?
 
-We have `toModel` for sections because we CREATE sections (send data TO the server). But we never create categories from this app — we only READ them. So we only need the one-way conversion.
+We have `toModel` for sections because we CREATE sections (send data TO the server). But we never create categories from this app .. we only READ them. So we only need the one-way conversion.
 
 #### Line 1: Mapping sub-categories
 ```dart
@@ -243,7 +243,7 @@ model.subCategories
     .toList()                               // Convert to a concrete List
 ```
 
-This handles the nested conversion — each `SubCategoryModel` inside the `CategoryModel` is also converted to a `SubCategory` entity.
+This handles the nested conversion .. each `SubCategoryModel` inside the `CategoryModel` is also converted to a `SubCategory` entity.
 
 ---
 
@@ -252,7 +252,7 @@ This handles the nested conversion — each `SubCategoryModel` inside the `Categ
 Before mappers, models inherited from entities:
 
 ```dart
-// ❌ BEFORE — Model extends Entity
+// ❌ BEFORE .. Model extends Entity
 class SectionModel extends CategorySection {
   // Inherits: id, sectionTitle, categoryId, sortOrder, isActive
   factory SectionModel.fromEntity(CategorySection entity) { ... }
@@ -264,7 +264,7 @@ class SectionModel extends CategorySection {
 After mappers, models are completely independent:
 
 ```dart
-// ✅ AFTER — Standalone Model
+// ✅ AFTER .. Standalone Model
 class SectionModel {
   final String? id;
   final String sectionTitle;
@@ -287,7 +287,7 @@ The model now only cares about JSON. The entity only cares about business data. 
 
 ## How Repositories Use Mappers
 
-The repository is where the mapper is called — it sits at the boundary between data and domain:
+The repository is where the mapper is called .. it sits at the boundary between data and domain:
 
 ```dart
 // File: lib/data/repositories/section_repository_impl.dart
@@ -314,7 +314,7 @@ class SectionRepositoryImpl implements ISectionRepository {
 - **Reading:** `API → Model → Mapper.toEntity() → Entity → Use Case → Cubit → UI`
 - **Writing:** `UI → Cubit → Use Case → Entity → Mapper.toModel() → Model → API`
 
-The mapper is the **checkpoint at the border** — nothing passes between layers without being converted.
+The mapper is the **checkpoint at the border** .. nothing passes between layers without being converted.
 
 ---
 
@@ -325,10 +325,10 @@ The mapper is the **checkpoint at the border** — nothing passes between layers
 | **Mapper**            | A class that converts between Models and Entities     |
 | **`toEntity()`**      | Converts data → domain (reading from API)             |
 | **`toModel()`**       | Converts domain → data (writing to API)               |
-| **Standalone Models** | Models don't extend entities — they're independent    |
+| **Standalone Models** | Models don't extend entities .. they're independent   |
 | **Separation**        | Each layer only knows about its own types             |
 | **Repository**        | The place where mappers are used (the layer boundary) |
 
 ---
 
-**Next Chapter:** Continue to Chapter 4 — Repositories & Use Cases.
+**Next Chapter:** Continue to Chapter 4 .. Repositories & Use Cases.

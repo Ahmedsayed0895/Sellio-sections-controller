@@ -1,8 +1,8 @@
-# Chapter 2: The Translator — Models & JSON Serialization
+# Chapter 2: The Translator .. Models & JSON Serialization
 
 > *"The server speaks JSON. Dart speaks objects. Someone needs to translate."*
 
-When your app talks to a server, data travels as **JSON** — a text format that looks like this:
+When your app talks to a server, data travels as **JSON** .. a text format that looks like this:
 
 ```json
 {
@@ -30,7 +30,7 @@ lib/
         └── category_model.g.dart     ← Auto-generated!
 ```
 
-Notice they live in the `data/` folder, not `domain/`. Why? Because JSON is a *data concern* — your business logic (domain) shouldn't care about JSON formats.
+Notice they live in the `data/` folder, not `domain/`. Why? Because JSON is a *data concern* .. your business logic (domain) shouldn't care about JSON formats.
 
 ---
 
@@ -101,7 +101,7 @@ This **annotation** (the `@` symbol) tells the code generator: "Please generate 
 The `super` keyword passes values UP to the parent class (`CategorySection`). It's like saying: "Hey parent, here's the id value for you."
 
 #### Line 7: `factory SectionModel.fromJson(Map<String, dynamic> json)`
-This is a **factory constructor** — a special constructor that can do logic before creating the object.
+This is a **factory constructor** .. a special constructor that can do logic before creating the object.
 - `Map<String, dynamic>` is how Dart represents a JSON object. It's a collection of key-value pairs.
 - `_$SectionModelFromJson(json)` calls the auto-generated function that reads the JSON and creates a `SectionModel`.
 
@@ -116,7 +116,7 @@ print(section.sectionTitle); // "Electronics"
 ```
 
 #### Line 8: `Map<String, dynamic> toJson()`
-The reverse — converts a Dart object back to JSON for sending to the server.
+The reverse .. converts a Dart object back to JSON for sending to the server.
 
 ```dart
 final section = SectionModel(sectionTitle: "Fashion", categoryId: "cat2", sortOrder: 2, isActive: true);
@@ -191,11 +191,11 @@ static List<SubCategory> _subsFromJson(List<dynamic> json) {
 ```
 
 Let's trace through this:
-1. `json` is a `List<dynamic>` — a list of "anything" (because JSON doesn't have types)
+1. `json` is a `List<dynamic>` .. a list of "anything" (because JSON doesn't have types)
 2. `.map(...)` transforms each item in the list
-3. `e as Map<String, dynamic>` — we tell Dart "trust me, each item is a JSON object"
-4. `SubCategoryModel.fromJson(...)` — converts that JSON object into a Dart object
-5. `.toList()` — `.map()` returns a lazy iterable, so we convert it to a concrete `List`
+3. `e as Map<String, dynamic>` .. we tell Dart "trust me, each item is a JSON object"
+4. `SubCategoryModel.fromJson(...)` .. converts that JSON object into a Dart object
+5. `.toList()` .. `.map()` returns a lazy iterable, so we convert it to a concrete `List`
 
 ---
 
@@ -209,7 +209,7 @@ flutter pub run build_runner build --delete-conflicting-outputs
 It reads your `@JsonSerializable()` classes and generates `.g.dart` files. For example, `section_model.g.dart` contains something like:
 
 ```dart
-// AUTO-GENERATED — DO NOT EDIT
+// AUTO-GENERATED .. DO NOT EDIT
 SectionModel _$SectionModelFromJson(Map<String, dynamic> json) =>
     SectionModel(
       id: json['id'] as String?,

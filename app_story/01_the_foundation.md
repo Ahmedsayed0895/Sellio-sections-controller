@@ -1,4 +1,4 @@
-# Chapter 1: The Foundation — Entities
+# Chapter 1: The Foundation .. Entities
 
 > *"Before you build a house, you need to know what rooms it will have."*
 
@@ -51,22 +51,22 @@ class CategorySection {
 ### Let's break this down line by line:
 
 #### `class CategorySection {`
-We're creating a new type called `CategorySection`. Think of a class like a **blueprint** — it describes what a section looks like, but it's not an actual section yet.
+We're creating a new type called `CategorySection`. Think of a class like a **blueprint** .. it describes what a section looks like, but it's not an actual section yet.
 
 #### `final String? id;`
 - `final` means this value can never change after it's set. Once a section has an id, it stays that id forever. This is called **immutability**.
-- `String?` — the `?` means this can be `null` (empty/nothing). Why? Because when you *create* a new section, it doesn't have an `id` yet — the server assigns one.
+- `String?` .. the `?` means this can be `null` (empty/nothing). Why? Because when you *create* a new section, it doesn't have an `id` yet .. the server assigns one.
 
 #### `required this.sectionTitle`
-- `required` means you MUST provide this value when creating a `CategorySection`. You can't have a section without a title — that would be meaningless.
+- `required` means you MUST provide this value when creating a `CategorySection`. You can't have a section without a title .. that would be meaningless.
 
 #### `final int sortOrder;`
 - `int` is a whole number (1, 2, 3...). This controls the order sections appear on screen.
 
 #### `final bool isActive;`
-- `bool` is either `true` or `false`. This is like a light switch — the section is either visible or hidden.
+- `bool` is either `true` or `false`. This is like a light switch .. the section is either visible or hidden.
 
-### The `copyWith` Method — The Clone Machine
+### The `copyWith` Method .. The Clone Machine
 
 ```dart
 CategorySection copyWith({
@@ -102,7 +102,7 @@ final updatedSection = section.copyWith(isActive: false);
 
 **The `??` operator** means "if the left side is null, use the right side." So `id ?? this.id` means "use the new id if I gave you one, otherwise keep my current id."
 
-**Real-world analogy:** Imagine you have a printed document. You can't edit a printed page — but you can photocopy it and write changes on the copy. That's `copyWith`.
+**Real-world analogy:** Imagine you have a printed document. You can't edit a printed page .. but you can photocopy it and write changes on the copy. That's `copyWith`.
 
 ---
 
@@ -126,19 +126,19 @@ class Category {
 }
 ```
 
-Notice that `id` is NOT nullable here (`String` not `String?`). Why? Because categories come from the server — they always have an id. We never create new categories from this app.
+Notice that `id` is NOT nullable here (`String` not `String?`). Why? Because categories come from the server .. they always have an id. We never create new categories from this app.
 
 ```dart
 class SubCategory {
   final String id;
   final String title;
-  final String? imageUrl;    // Nullable — not every sub-category has an image
+  final String? imageUrl;    // Nullable .. not every sub-category has an image
   final String categoryId;   // Which parent category this belongs to
 
   const SubCategory({
     required this.id,
     required this.title,
-    this.imageUrl,            // Optional — no 'required' keyword
+    this.imageUrl,            // Optional .. no 'required' keyword
     required this.categoryId,
   });
 }
@@ -161,10 +161,10 @@ The `const` keyword means: "If you create two `Category` objects with the exact 
 | **Entity**         | A plain Dart class that represents a core concept in your app |
 | **`final`**        | The value can't change after creation (immutability)          |
 | **`?` (nullable)** | The value might be `null` (nothing/empty)                     |
-| **`required`**     | You must provide this value — it's not optional               |
+| **`required`**     | You must provide this value .. it's not optional              |
 | **`copyWith`**     | Creates a modified copy of an immutable object                |
 | **`??`**           | "Use this value, OR if it's null, use that one instead"       |
-| **`const`**        | Compile-time constant — saves memory                          |
+| **`const`**        | Compile-time constant .. saves memory                         |
 
 ---
 

@@ -1,12 +1,12 @@
-# Chapter 0: The Prologue — What Are We Building?
+# Chapter 0: The Prologue .. What Are We Building?
 
-Welcome to the story of **Sellio Categories Section Controller** — a real-world Flutter application built from the ground up using professional software engineering practices.
+Welcome to the story of **Sellio Categories Section Controller** .. a real-world Flutter application built from the ground up using professional software engineering practices.
 
 ---
 
 ## The Problem
 
-Imagine you work at an e-commerce company called **Sellio**. The app has a Home Screen that shows different product sections like "Electronics", "Fashion", "Home & Kitchen". Someone needs to **manage** these sections — create new ones, change their order, turn them on/off, and delete them.
+Imagine you work at an e-commerce company called **Sellio**. The app has a Home Screen that shows different product sections like "Electronics", "Fashion", "Home & Kitchen". Someone needs to **manage** these sections .. create new ones, change their order, turn them on/off, and delete them.
 
 That "someone" is the **Admin**. And this app is the **Admin Panel** they use.
 
@@ -28,13 +28,13 @@ Here's the full feature list:
 Before we dive in, here's what tools and packages we use:
 
 ```
-🎯 Flutter (Dart)          → The framework for building the UI
-🌐 Dio                     → HTTP client for talking to the server
-🔌 Retrofit                → Generates type-safe API calls automatically
-📦 json_serializable       → Converts JSON ↔ Dart objects automatically
-🧱 flutter_bloc (Cubit)    → State management (the brain of the UI)
-💉 GetIt + Injectable      → Dependency Injection (the wiring)
-🔄 build_runner            → Code generation tool
+ Flutter (Dart)          → The framework for building the UI
+ Dio                     → HTTP client for talking to the server
+ Retrofit                → Generates type-safe API calls automatically
+ json_serializable       → Converts JSON ↔ Dart objects automatically
+ flutter_bloc (Cubit)    → State management (the brain of the UI)
+ GetIt + Injectable      → Dependency Injection (the wiring)
+ build_runner            → Code generation tool
 ```
 
 ## The Architecture
@@ -60,15 +60,15 @@ We follow **Clean Architecture**, which splits the code into 3 layers:
 
 Each chapter builds on the previous one. We start from the very bottom (the data that flows through the app) and work our way up to what the user sees on screen.
 
-| Chapter | Title          | What You'll Learn                       |
-| ------- | -------------- | --------------------------------------- |
-| 1       | The Foundation | Entities — the core data structures     |
-| 2       | The Translator | Models — converting JSON to Dart        |
-| 3       | The Messenger  | API & Networking with Retrofit          |
-| 3.5     | The Bridge     | Mappers — connecting Models to Entities |
-| 4       | The Rulebook   | Repositories & Use Cases                |
-| 5       | The Wiring     | Dependency Injection with GetIt         |
-| 6       | The Brain      | State Management with Cubit             |
-| 7       | The Face       | Building the UI                         |
+| Chapter | Title          | What You'll Learn                        |
+| ------- | -------------- | ---------------------------------------- |
+| 1       | The Foundation | Entities .. the core data structures     |
+| 2       | The Translator | Models .. converting JSON to Dart        |
+| 3       | The Messenger  | API & Networking with Retrofit           |
+| 3.5     | The Bridge     | Mappers .. connecting Models to Entities |
+| 4       | The Rulebook   | Repositories & Use Cases                 |
+| 5       | The Wiring     | Dependency Injection with GetIt          |
+| 6       | The Brain      | State Management with Cubit              |
+| 7       | The Face       | Building the UI                          |
 
 Let's begin!
